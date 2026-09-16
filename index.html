@@ -280,8 +280,9 @@ p{margin:0}
 }
 
 /* ---------- assets ---------- */
-.assets{margin-top:clamp(52px,7vw,84px);display:grid;gap:44px;grid-template-columns:repeat(2,1fr)}
-.asset{border-top:1px solid var(--ink);padding-top:30px;display:grid;grid-template-columns:150px 1fr;gap:28px;align-items:start}
+.assets{margin-top:clamp(52px,7vw,84px);display:grid;gap:40px;grid-template-columns:repeat(3,1fr)}
+.asset{border-top:1px solid var(--ink);padding-top:30px;display:grid;gap:24px;align-items:start}
+.asset .cover-link{display:block;width:142px;max-width:100%}
 .cover{
   aspect-ratio:2/3;max-width:100%;border-radius:6px;padding:20px 17px;
   display:flex;flex-direction:column;justify-content:space-between;
@@ -289,15 +290,36 @@ p{margin:0}
 }
 .cover--flow{background:linear-gradient(168deg,#2C3E35 0%,#16211C 100%);color:#EAF2EC}
 .cover--series{background:linear-gradient(168deg,#8D5B4C 0%,#4E2F26 100%);color:#F7EEE9}
+.cover--daily{background:linear-gradient(168deg,#2A2622 0%,#121010 100%);color:#EFE9E1}
 .cover .kicker{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;opacity:.72}
-.cover .ttl{font-family:var(--serif);font-size:17px;line-height:1.3;letter-spacing:0}
+.cover .ttl{font-family:var(--serif);font-size:17px;line-height:1.35;letter-spacing:0}
+.cover--daily .ttl{font-size:14px;line-height:1.5}
 .cover .ttl em{display:block;font-style:normal;font-size:11px;opacity:.7;margin-top:8px;letter-spacing:.05em}
 .cover .sig{font-size:9px;letter-spacing:.16em;opacity:.66}
 .asset h3{font-size:1.25rem;line-height:1.45}
 .asset p{margin-top:14px;color:var(--muted);font-size:0.96875rem;line-height:1.9;font-weight:400}
-.asset .meta{font-family:var(--ui);margin-top:18px}
+.asset .meta{font-family:var(--ui);margin-top:16px}
+/* 購買連結是這一區唯一可互動的東西，所以它拿走這一區唯一的顏色 */
+.buy{
+  display:inline-flex;align-items:center;gap:5px;margin-top:18px;
+  font-family:var(--ui);font-size:0.9375rem;font-weight:500;color:var(--accent);
+}
+.buy::after{content:"\203A";font-size:1.15rem;line-height:1;transform:translateY(-1px);transition:transform .2s ease}
+.buy:hover::after{transform:translate(4px,-1px)}
+.buy:active{opacity:.6}
+@media (prefers-reduced-motion:reduce){.buy::after{transition:none}}
 .meta{font-size:0.78125rem;letter-spacing:.06em;color:var(--faint)}
-@media (max-width:900px){.assets{grid-template-columns:1fr}}
+/* 三欄並列時，購買連結在每張卡上都落在同一個位置 */
+@media (min-width:901px){
+  .asset{grid-template-rows:auto 1fr;align-items:stretch}
+  .asset-body{display:flex;flex-direction:column}
+  .asset-body .buy{margin-top:auto;padding-top:18px}
+}
+/* 三項在兩欄裡會落單一個，所以中等寬度直接回到單欄，書封改置於文字左側 */
+@media (max-width:900px){
+  .assets{grid-template-columns:1fr;gap:44px}
+  .asset{grid-template-columns:150px 1fr;gap:28px}
+}
 @media (max-width:460px){.asset{grid-template-columns:118px 1fr;gap:20px}}
 
 /* ---------- form ---------- */
@@ -510,27 +532,47 @@ form .btn{width:100%}
     <div class="shell">
       <p class="eyebrow">數位資產</p>
       <h2 class="section-title">長尾生態：讓文字先於你抵達。</h2>
-      <p class="section-lede">一人商業閉環的另一半，是能夠獨立運轉的知識產品線。以下是目前已上線與研發中的兩條主線。</p>
+      <p class="section-lede">一人商業閉環的另一半，是能夠獨立運轉的知識產品線。以下是目前已上線與研發中的三條主線。</p>
       <div class="assets">
         <article class="asset">
-          <div class="cover cover--flow" role="img" aria-label="英文電子書《The Architecture of Inner Flow》書封">
-            <span class="kicker">The Open System Series</span>
-            <span class="ttl">The Architecture of Inner Flow<em>Chia-Chi Chien</em></span>
-            <span class="sig">KDP · GUMROAD</span>
-          </div>
-          <div>
+          <a class="cover-link" href="https://www.amazon.com/dp/B0H3VZ1JH2" target="_blank" rel="noopener noreferrer" aria-label="在 Amazon 購買《The Architecture of Inner Flow》">
+            <span class="cover cover--flow" aria-hidden="true">
+              <span class="kicker">The Open System Series</span>
+              <span class="ttl">The Architecture of Inner Flow<em>Chia-Chi Chien</em></span>
+              <span class="sig">AMAZON KDP</span>
+            </span>
+          </a>
+          <div class="asset-body">
             <h3>《The Architecture of Inner Flow》</h3>
-            <p>以耗散結構為骨架的英文電子書，寫給在高壓職位上感覺能量持續逸散的專業工作者。已於 Amazon KDP 與 Gumroad 上架。</p>
-            <p class="meta">英文 · Amazon KDP · Gumroad</p>
+            <p>以耗散結構為骨架的英文電子書，寫給在高壓職位上感覺能量持續逸散的專業工作者。</p>
+            <p class="meta">英文 · 電子書 · Amazon</p>
+            <a class="buy" href="https://www.amazon.com/dp/B0H3VZ1JH2" target="_blank" rel="noopener noreferrer">在 Amazon 購買</a>
           </div>
         </article>
         <article class="asset">
-          <div class="cover cover--series" role="img" aria-label="開放系統三部曲研發計畫書封">
-            <span class="kicker">研發計畫 · In Development</span>
-            <span class="ttl">開放系統<br>三部曲<em>The Open System Series</em></span>
-            <span class="sig">負熵計畫</span>
+          <a class="cover-link" href="https://www.kobo.com/hk/zh/ebook/qdamXwfCTjWLK_PnrEUfew" target="_blank" rel="noopener noreferrer" aria-label="在 Kobo 購買《我們不要就這樣算了，但也不要一直記得》">
+            <span class="cover cover--daily" aria-hidden="true">
+              <span class="kicker">幸福三部曲 · 第 1 冊</span>
+              <span class="ttl">我們不要就這樣算了，但也不要一直記得<em>為道日損 · 簡家旗</em></span>
+              <span class="sig">KOBO</span>
+            </span>
+          </a>
+          <div class="asset-body">
+            <h3>《我們不要就這樣算了，但也不要一直記得》</h3>
+            <p>幸福三部曲的第一冊，副題〈為道日損〉——語出《道德經》「為學日益，為道日損」。簡家旗著。</p>
+            <p class="meta">繁體中文 · 電子書 · Kobo</p>
+            <a class="buy" href="https://www.kobo.com/hk/zh/ebook/qdamXwfCTjWLK_PnrEUfew" target="_blank" rel="noopener noreferrer">在 Kobo 購買</a>
           </div>
-          <div>
+        </article>
+        <article class="asset">
+          <div class="cover-link">
+            <span class="cover cover--series" role="img" aria-label="開放系統三部曲研發計畫書封">
+              <span class="kicker">研發計畫 · In Development</span>
+              <span class="ttl">開放系統<br>三部曲<em>The Open System Series</em></span>
+              <span class="sig">負熵計畫</span>
+            </span>
+          </div>
+          <div class="asset-body">
             <h3>開放系統三部曲</h3>
             <p>從物理負熵、感官接地到數位槓桿，三冊各自對應一根支柱，逐步展開一個人如何成為持續與世界交換能量的開放系統。研發中。</p>
             <p class="meta">繁體中文 · 三冊 · 研發中</p>

@@ -45,7 +45,12 @@ The Open System Series / Negentropy Project
 2. **Hero** — 標題「告別無效增熵，以大道至簡，一人活成一支軍隊。」兩個行動點：預約深度對話 NT$ 26,400、索取 8 頁策略指南。
 3. **核心哲學** — 三支柱，以髮絲線分欄，無卡片。
 4. **服務矩陣** — 三階方案卡。860px 以下改用分段控制器切換。
-5. **數位資產** — 英文電子書《The Architecture of Inner Flow》（Amazon KDP / Gumroad）與開放系統三部曲研發計畫，書封以純 CSS 繪製。
+5. **數位資產** — 三個項目，書封皆以純 CSS 繪製（無圖檔）：
+   - 《The Architecture of Inner Flow》— 英文電子書，[Amazon](https://www.amazon.com/dp/B0H3VZ1JH2)
+   - 《我們不要就這樣算了，但也不要一直記得》— 幸福三部曲第 1 冊，副題〈為道日損〉，簡家旗著，[Kobo](https://www.kobo.com/hk/zh/ebook/qdamXwfCTjWLK_PnrEUfew)
+   - 開放系統三部曲 — 研發中，無購買連結
+
+   已上市的書，書封與文字連結都指向購買頁，於新分頁開啟。購買連結是這一區唯一的互動元素，因此也是唯一帶顏色的元素。
 6. **審核申請表單** — 申請層級、姓名、Email、目前職位與年收級距、目前最大的系統性瓶頸，以及索取策略指南的勾選。上方任一方案的按鈕都會自動帶入對應層級。送出後跳出確認視窗：「申請已送出，我們將於 48 小時內審核並寄發行前評估問卷」，並回報所申請的層級。
 7. **頁尾** — Copyright © 2026 大道至簡. All rights reserved. Made for Solopreneurs.
 
