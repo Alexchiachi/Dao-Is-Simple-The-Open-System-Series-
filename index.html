@@ -211,31 +211,34 @@ p{margin:0}
   font-size:clamp(1rem,2vw,1.3125rem);font-weight:400;line-height:1.95;
 }
 .hero-cta{margin-top:38px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
-.hero-note{font-family:var(--ui);margin-top:22px;font-size:0.78125rem;color:var(--faint)}
-.hero-rule{
-  margin:clamp(56px,8vw,88px) auto 0;max-width:720px;height:1px;
-  background:var(--line-soft);
-}
-.hero-marks{
-  margin-top:26px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 34px;
-  font-family:var(--ui);font-size:0.78125rem;color:var(--faint);letter-spacing:.06em;
-}
 @media (prefers-reduced-motion:no-preference){
   .rise{animation:rise .8s cubic-bezier(.22,.68,.32,1) both}
   .rise-2{animation-delay:.09s}
   .rise-3{animation-delay:.18s}
-  .rise-4{animation-delay:.27s}
   @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 }
 
+.marks{
+  list-style:none;margin:30px 0 0;padding:20px 0 0;border-top:1px solid var(--line-soft);
+  display:flex;flex-wrap:wrap;gap:10px 34px;
+  font-family:var(--ui);font-size:0.78125rem;color:var(--faint);letter-spacing:.06em;
+}
+
 /* ---------- pillars ---------- */
-.pillars{margin-top:clamp(52px,7vw,84px);display:grid;gap:40px;grid-template-columns:repeat(3,1fr)}
-.pillar{border-top:1px solid var(--ink);padding-top:26px;display:flex;flex-direction:column;gap:14px}
-.pillar .glyph{font-family:var(--serif);font-size:2.875rem;line-height:1;color:var(--ink);font-weight:400}
-.pillar h3{font-size:1.25rem}
-.pillar p{color:var(--muted);font-size:0.96875rem;line-height:1.9;font-weight:400}
+.pillars{margin-top:clamp(44px,6vw,68px);display:grid}
+.pillar{
+  border-top:1px solid var(--ink);padding:28px 0 clamp(34px,4vw,48px);
+  display:grid;grid-template-columns:minmax(150px,20%) 1fr;gap:clamp(24px,5vw,60px);align-items:start;
+}
+.pillar-mark{display:flex;flex-direction:column;gap:10px}
+.pillar .glyph{font-family:var(--serif);font-size:3.25rem;line-height:1;color:var(--ink);font-weight:400}
 .pillar .term{font-family:var(--ui);font-size:0.78125rem;letter-spacing:.1em;color:var(--faint);text-transform:uppercase}
-@media (max-width:820px){.pillars{grid-template-columns:1fr;gap:34px}}
+.pillar h3{font-size:1.25rem}
+.pillar p{margin-top:12px;max-width:62ch;color:var(--muted);font-size:0.96875rem;line-height:1.9;font-weight:400}
+@media (max-width:700px){
+  .pillar{grid-template-columns:1fr;gap:18px;padding-bottom:34px}
+  .pillar-mark{flex-direction:row;align-items:baseline;gap:16px}
+}
 
 /* ---------- tiers ---------- */
 .segmented{
@@ -283,7 +286,9 @@ p{margin:0}
 }
 
 /* ---------- assets ---------- */
-.assets{margin-top:clamp(52px,7vw,84px);display:grid;gap:40px;grid-template-columns:repeat(3,1fr)}
+/* 兩本可購買的並列，研發中的橫跨整列並用較淡的界線——版面說出內容的實情 */
+.assets{margin-top:clamp(52px,7vw,84px);display:grid;gap:40px;grid-template-columns:repeat(2,1fr)}
+.asset--wide{grid-column:1 / -1;border-top-color:var(--line);grid-template-columns:142px 1fr;gap:28px}
 .asset{border-top:1px solid var(--ink);padding-top:30px;display:grid;gap:24px;align-items:start}
 .asset .cover-link{display:block;width:142px;max-width:100%}
 .cover{
@@ -439,13 +444,6 @@ form .btn{width:100%}
         <a class="btn btn--fill" href="#apply" data-apply="t1">預約深度對話 NT$ 26,400</a>
         <a class="btn btn--ghost" href="#apply" data-apply="guide">索取 8 頁策略指南</a>
       </div>
-      <p class="hero-note rise rise-3">策略指南免費，以 Email 寄送；諮詢席次採審核制。</p>
-      <div class="hero-rule rise rise-4"></div>
-      <div class="hero-marks rise rise-4">
-        <span>每季僅收 1-2 位全週期學員</span>
-        <span>工坊每班上限 2 人</span>
-        <span>服務對象 38-55 歲創辦人與高階主管</span>
-      </div>
     </div>
   </section>
 
@@ -456,22 +454,34 @@ form .btn{width:100%}
       <p class="section-lede">封閉系統必然走向熵增：行程滿載、決策疲勞、情緒耗竭。開放系統則不同——它持續與外界交換能量，在遠離平衡之處長出新的秩序。這三根支柱，是把一個人重新打開成開放系統的方法。</p>
       <div class="pillars">
         <article class="pillar">
-          <span class="glyph" aria-hidden="true">熵</span>
-          <p class="term">Negentropy</p>
+          <div class="pillar-mark">
+            <span class="glyph" aria-hidden="true">熵</span>
+            <p class="term">Negentropy</p>
+          </div>
+          <div class="pillar-body">
           <h3>物理負熵</h3>
           <p>打破封閉系統的內耗，建立能量自足的開放秩序。先盤點能量的流入與逸散，再重寫你的時間、金流與注意力分配，讓秩序由系統本身持續產生。</p>
+          </div>
         </article>
         <article class="pillar">
-          <span class="glyph" aria-hidden="true">感</span>
-          <p class="term">Sensory Grounding</p>
+          <div class="pillar-mark">
+            <span class="glyph" aria-hidden="true">感</span>
+            <p class="term">Sensory Grounding</p>
+          </div>
+          <div class="pillar-body">
           <h3>感官接地</h3>
           <p>地方文化工藝與自然發酵，為大腦徹底降噪。體驗地方、等待連結、觀察自然——以身體尺度的勞動把過度抽象的心智重新錨定回真實世界。</p>
+          </div>
         </article>
         <article class="pillar">
-          <span class="glyph" aria-hidden="true">槓</span>
-          <p class="term">Digital Leverage</p>
+          <div class="pillar-mark">
+            <span class="glyph" aria-hidden="true">槓</span>
+            <p class="term">Digital Leverage</p>
+          </div>
+          <div class="pillar-body">
           <h3>數位槓桿</h3>
           <p>以 AI 與雲端自動化建構單人流水線，維持極致輕資產。沒有團隊、沒有庫存、沒有固定成本，只有一條能在你睡著時繼續運轉的產線。</p>
+          </div>
         </article>
       </div>
     </div>
@@ -479,9 +489,13 @@ form .btn{width:100%}
 
   <section class="section" id="offerings">
     <div class="shell">
-      <p class="eyebrow">服務矩陣</p>
       <h2 class="section-title">三個層級，一條完整路徑。</h2>
       <p class="section-lede">從一次深度診斷，到山林中的感官定錨，再到三個月的全週期陪跑。每一階都可獨立運作，也可依序推進。</p>
+      <ul class="marks">
+        <li>每季僅收 1-2 位全週期學員</li>
+        <li>工坊每班上限 2 人</li>
+        <li>服務對象 38-55 歲創辦人與高階主管</li>
+      </ul>
 
       <div class="segmented" id="tier-switch" role="group" aria-label="選擇方案層級">
         <button type="button" data-tier="t1" aria-pressed="false">深度對話</button>
@@ -576,7 +590,7 @@ form .btn{width:100%}
             <a class="buy" href="https://www.kobo.com/hk/zh/ebook/qdamXwfCTjWLK_PnrEUfew" target="_blank" rel="noopener noreferrer">在 Kobo 購買</a>
           </div>
         </article>
-        <article class="asset">
+        <article class="asset asset--wide">
           <div class="cover-link">
             <span class="cover cover--series" role="img" aria-label="開放系統三部曲研發計畫書封">
               <span class="kicker">研發計畫 · In Development</span>
@@ -596,7 +610,6 @@ form .btn{width:100%}
 
   <section class="section" id="apply">
     <div class="shell">
-      <p class="eyebrow">審核申請</p>
       <h2 class="section-title">先確認彼此合適，再談合作。</h2>
       <div class="apply-grid">
         <div class="apply-aside">
