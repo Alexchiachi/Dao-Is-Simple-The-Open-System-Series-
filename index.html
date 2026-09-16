@@ -21,6 +21,7 @@
   --accent:#8D5B4C;
   --accent-press:#754739;
   --accent-wash:rgba(141,91,76,.09);
+  --on-accent:#FFFFFF;
   --moss:#2C3E35;
   --moss-ink:#E7EDE8;
   --nav-bg:rgba(251,251,253,.72);
@@ -45,6 +46,7 @@
     --accent:#CE8E79;
     --accent-press:#E0A791;
     --accent-wash:rgba(206,142,121,.14);
+    --on-accent:#2A1710;
     --moss:#3C5648;
     --moss-ink:#EAF2EC;
     --nav-bg:rgba(11,11,12,.72);
@@ -65,6 +67,7 @@
   --accent:#CE8E79;
   --accent-press:#E0A791;
   --accent-wash:rgba(206,142,121,.14);
+    --on-accent:#2A1710;
   --moss:#3C5648;
   --moss-ink:#EAF2EC;
   --nav-bg:rgba(11,11,12,.72);
@@ -148,7 +151,7 @@ p{margin:0}
   padding:13px 26px;border-radius:980px;border:1px solid transparent;cursor:pointer;
   transition:background-color .22s ease,color .22s ease,border-color .22s ease,transform .22s ease;
 }
-.btn--fill{background:var(--accent);color:#fff}
+.btn--fill{background:var(--accent);color:var(--on-accent)}
 .btn--fill:hover{background:var(--accent-press)}
 .btn--ghost{background:transparent;color:var(--accent);border-color:var(--accent)}
 .btn--ghost:hover{background:var(--accent-wash)}
@@ -218,7 +221,7 @@ p{margin:0}
 .segmented button[aria-pressed="true"]{background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.12)}
 @media (max-width:860px){.segmented{display:flex}}
 
-.tiers{margin-top:clamp(36px,5vw,56px);display:grid;gap:18px;grid-template-columns:repeat(3,1fr);align-items:start}
+.tiers{margin-top:clamp(36px,5vw,56px);display:grid;gap:18px;grid-template-columns:repeat(3,1fr)}
 .tier{
   position:relative;background:var(--surface);border:1px solid var(--line-soft);
   border-radius:var(--radius);padding:34px 30px 32px;display:flex;flex-direction:column;
@@ -502,7 +505,7 @@ form .btn{width:100%}
         <article class="asset">
           <div class="cover cover--series" role="img" aria-label="開放系統三部曲研發計畫書封">
             <span class="kicker">研發計畫 · In Development</span>
-            <span class="ttl">開放系統三部曲<em>The Open System Series</em></span>
+            <span class="ttl">開放系統<br>三部曲<em>The Open System Series</em></span>
             <span class="sig">負熵計畫</span>
           </div>
           <div>
