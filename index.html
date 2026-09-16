@@ -134,6 +134,9 @@ p{margin:0}
 .section-title{font-size:clamp(1.75rem,4.2vw,2.75rem);font-weight:700;letter-spacing:-.012em;line-height:1.3}
 .section-lede{margin-top:22px;max-width:64ch;color:var(--muted);font-size:1.0625rem;line-height:1.95;font-weight:400}
 
+/* 頁面頂端的哨兵：它離開視窗，就代表有內容捲到導航下方了 */
+.top-sentinel{position:absolute;top:0;left:0;width:1px;height:4px;pointer-events:none}
+
 /* ---------- nav ---------- */
 .nav{
   position:sticky;top:env(safe-area-inset-top,0px);z-index:60;
@@ -397,6 +400,8 @@ form .btn{width:100%}
 </head>
 <body>
 
+<div class="top-sentinel" aria-hidden="true"></div>
+
 <header class="nav">
   <div class="nav-inner">
     <a class="brand" href="#top">
@@ -437,9 +442,9 @@ form .btn{width:100%}
       <p class="hero-note rise rise-3">策略指南免費，以 Email 寄送；諮詢席次採審核制。</p>
       <div class="hero-rule rise rise-4"></div>
       <div class="hero-marks rise rise-4">
-        <span>每季僅收 1–2 位全週期學員</span>
+        <span>每季僅收 1-2 位全週期學員</span>
         <span>工坊每班上限 2 人</span>
-        <span>服務對象 38–55 歲創辦人與高階主管</span>
+        <span>服務對象 38-55 歲創辦人與高階主管</span>
       </div>
     </div>
   </section>
@@ -522,7 +527,7 @@ form .btn{width:100%}
           <h3>一人商業閉環<br>3 個月全週期親自陪跑</h3>
           <p class="price"><small>NT$</small>504,000</p>
           <ul>
-            <li>嚴苛審核制，每季限定 1–2 位</li>
+            <li>嚴苛審核制，每季限定 1-2 位</li>
             <li>含台灣 雲南山林體驗</li>
             <li>國際化數位產品線搭設（Amazon KDP / Gumroad）</li>
             <li>AI 自動化一人流水線完整部署</li>
@@ -552,7 +557,7 @@ form .btn{width:100%}
           <div class="asset-body">
             <h3>《The Architecture of Inner Flow》</h3>
             <p>以耗散結構為骨架的英文電子書，寫給在高壓職位上感覺能量持續逸散的專業工作者。</p>
-            <p class="meta">英文 · 電子書 · Amazon</p>
+            <p class="meta">英文電子書 · Amazon</p>
             <a class="buy" href="https://www.amazon.com/dp/B0H3VZ1JH2" target="_blank" rel="noopener noreferrer">在 Amazon 購買</a>
           </div>
         </article>
@@ -567,7 +572,7 @@ form .btn{width:100%}
           <div class="asset-body">
             <h3>《我們不要就這樣算了，但也不要一直記得》</h3>
             <p>幸福三部曲的第一冊，副題〈為道日損〉——語出《道德經》「為學日益，為道日損」。簡家旗著。</p>
-            <p class="meta">繁體中文 · 電子書 · Kobo</p>
+            <p class="meta">繁體中文電子書 · Kobo</p>
             <a class="buy" href="https://www.kobo.com/hk/zh/ebook/qdamXwfCTjWLK_PnrEUfew" target="_blank" rel="noopener noreferrer">在 Kobo 購買</a>
           </div>
         </article>
@@ -582,7 +587,7 @@ form .btn{width:100%}
           <div class="asset-body">
             <h3>開放系統三部曲</h3>
             <p>從物理負熵、感官接地到數位槓桿，三冊各自對應一根支柱，逐步展開一個人如何成為持續與世界交換能量的開放系統。研發中。</p>
-            <p class="meta">繁體中文 · 三冊 · 研發中</p>
+            <p class="meta">繁體中文三冊 · 研發中</p>
           </div>
         </article>
       </div>
@@ -631,9 +636,9 @@ form .btn{width:100%}
             <select id="applicant-tier" name="tier" required>
               <option value="" selected disabled>請選擇一項</option>
               <option>創辦人 / 負責人・年收 300 萬以下</option>
-              <option>創辦人 / 負責人・年收 300–1,000 萬</option>
+              <option>創辦人 / 負責人・年收 300-1,000 萬</option>
               <option>創辦人 / 負責人・年收 1,000 萬以上</option>
-              <option>C-Level 高階主管・年薪 300–600 萬</option>
+              <option>C-Level 高階主管・年薪 300-600 萬</option>
               <option>C-Level 高階主管・年薪 600 萬以上</option>
               <option>高淨值創作者 / 專業工作者</option>
             </select>
@@ -711,27 +716,29 @@ form .btn{width:100%}
   var nav = document.querySelector('.nav');
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
   var sections = navLinks.map(function (a) { return document.querySelector(a.getAttribute('href')); });
-  var ticking = false;
 
-  function syncChrome() {
-    ticking = false;
-    nav.classList.toggle('is-top', window.scrollY <= 4);
-    var current = -1;
-    for (var i = 0; i < sections.length; i++) {
-      if (sections[i] && sections[i].getBoundingClientRect().top <= 120) current = i;
-    }
+  // 導航材質：觀察頁首哨兵，不必監聽每一次捲動
+  new IntersectionObserver(function (entries) {
+    nav.classList.toggle('is-top', entries[0].isIntersecting);
+  }).observe(document.querySelector('.top-sentinel'));
+
+  // 指路：章節落在視窗上緣那一帶時即為「目前所在」，
+  // 同時落在帶內時取文件順序最後一個
+  var inBand = [];
+  var spy = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var i = sections.indexOf(e.target);
+      inBand[i] = e.isIntersecting;
+    });
+    var current = inBand.lastIndexOf(true);
     navLinks.forEach(function (a, i) {
       if (i === current) a.setAttribute('aria-current', 'true');
       else a.removeAttribute('aria-current');
     });
-  }
-  window.addEventListener('scroll', function () {
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(syncChrome);
-    }
-  }, { passive: true });
-  syncChrome();
+  // 上下都用百分比：若上緣用固定 120px，在矮視窗（手機橫置約 375px 高）
+  // 判定帶會被壓成零高度，指路就會無聲失效
+  }, { rootMargin: '-15% 0px -70% 0px' });
+  sections.forEach(function (s) { if (s) spy.observe(s); });
 
   var seg = document.getElementById('tier-switch');
   var tiers = document.getElementById('tiers');
