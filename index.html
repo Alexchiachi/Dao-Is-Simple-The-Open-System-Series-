@@ -349,6 +349,13 @@ input:user-invalid:focus,select:user-invalid:focus,textarea:user-invalid:focus{b
 .optin{display:flex;gap:11px;align-items:flex-start;font-size:0.96875rem;line-height:1.7;color:var(--muted);font-weight:400}
 .optin input{width:18px;height:18px;flex:none;margin-top:3px;accent-color:var(--accent);padding:0}
 form .btn{width:100%}
+.honeypot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form-error{
+  font-family:var(--ui);font-size:0.84375rem;line-height:1.75;color:var(--danger);
+  border-left:2px solid var(--danger);padding-left:13px;
+}
+.btn:disabled{opacity:.6;cursor:progress}
+.btn:disabled:active{transform:none}
 .legal{font-family:var(--ui);font-size:0.78125rem;color:var(--faint);text-align:center;line-height:1.7}
 @media (max-width:860px){.apply-grid{grid-template-columns:1fr}}
 
@@ -636,11 +643,16 @@ form .btn{width:100%}
             <textarea id="applicant-bottleneck" name="bottleneck" required placeholder="例如：營收仰賴我個人時間、團隊擴編後決策品質下降、長期處於高耗能低產出的狀態⋯⋯"></textarea>
             <p class="hint">越具體，審核與行前問卷越能對準你的實際處境。</p>
           </div>
+          <div class="honeypot" aria-hidden="true">
+            <label for="company-website">請留空</label>
+            <input type="text" id="company-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
           <label class="optin" for="guide-optin">
             <input type="checkbox" id="guide-optin" name="guide" checked>
             <span>同時索取《8 頁高階主管單兵轉型策略指南》，以 Email 寄送。</span>
           </label>
-          <button class="btn btn--fill" type="submit">送出審核申請</button>
+          <p class="form-error" id="form-error" role="alert" hidden></p>
+          <button class="btn btn--fill" type="submit" id="submit-btn">送出審核申請</button>
           <p class="legal">送出即表示同意我們為本次審核與行前評估使用上述資料。</p>
         </form>
       </div>
@@ -672,6 +684,12 @@ form .btn{width:100%}
 
 <script>
 (function () {
+  // Apps Script 網頁應用程式網址（scripts/apps-script.gs 部署後取得）。
+  // 留空時表單會如實顯示送出失敗，不會假稱成功。
+  var ENDPOINT = '';
+  // 送出失敗時提供給訪客的備援聯絡信箱；留空則訊息中不出現。
+  var CONTACT_EMAIL = '';
+
   var toggle = document.getElementById('nav-toggle');
   var panel = document.getElementById('nav-panel');
 
@@ -766,14 +784,69 @@ form .btn{width:100%}
     window.setTimeout(finishClose, 200);
   }
   var levelOut = document.getElementById('confirm-level');
+  var submitBtn = document.getElementById('submit-btn');
+  var errorOut = document.getElementById('form-error');
+  var submitLabel = submitBtn.textContent;
+  var sending = false;
+
+  function failed() {
+    errorOut.textContent = CONTACT_EMAIL
+      ? '送出失敗，可能是連線中斷。請再試一次，或直接來信 ' + CONTACT_EMAIL + '。'
+      : '送出失敗，可能是連線中斷。請再試一次；若仍然失敗，請稍後再回到本頁。';
+    errorOut.hidden = false;
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    if (!form.reportValidity()) return;
-    levelOut.textContent = '申請層級：' + level.options[level.selectedIndex].text;
-    lastFocus = document.activeElement;
-    modal.hidden = false;
-    close.focus();
-    form.reset();
+    if (sending || !form.reportValidity()) return;
+
+    var levelText = level.options[level.selectedIndex].text;
+    var payload = {
+      level: levelText,
+      name: document.getElementById('applicant-name').value,
+      email: document.getElementById('applicant-email').value,
+      tier: document.getElementById('applicant-tier').value,
+      bottleneck: document.getElementById('applicant-bottleneck').value,
+      guide: guide.checked,
+      website: document.getElementById('company-website').value
+    };
+
+    sending = true;
+    errorOut.hidden = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = '傳送中⋯';
+
+    var done = function (ok) {
+      sending = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitLabel;
+      if (!ok) {
+        failed();
+        return;
+      }
+      levelOut.textContent = '申請層級：' + levelText;
+      lastFocus = submitBtn;
+      modal.hidden = false;
+      close.focus();
+      form.reset();
+    };
+
+    if (!ENDPOINT) {
+      // 收件端尚未設定。寧可說送不出去，也不要謊稱已送達。
+      done(false);
+      return;
+    }
+
+    // text/plain 讓這成為「簡單請求」，不會觸發 preflight——
+    // Apps Script 的網頁應用程式不處理 OPTIONS。
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (r) { done(!!(r && r.ok)); })
+      .catch(function () { done(false); });
   });
   close.addEventListener('click', closeModal);
   modal.addEventListener('click', function (e) {
