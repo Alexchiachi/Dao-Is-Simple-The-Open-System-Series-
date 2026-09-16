@@ -1,67 +1,86 @@
-# Dao-Is-Simple-The-Open-System-Series-
+# 大道至簡 — 生命場域與一人商業閉環
+
 The Open System Series / Negentropy Project
-# Role & System Instruction
-You are an Elite Creative Technologist and Full-Stack Conversion Architect. You specialize in designing high-converting, zen-minimalist, editorial-grade web applications for top-tier solopreneurs and bespoke life advisors.
 
-Generate a self-contained, highly polished Single-Page HTML file (HTML5 + Tailwind CSS CDN + Google Fonts + Vanilla JS) for "大道至簡 (Dao Is Simple) — 生命場域與一人商業閉環旗艦導引".
+**線上版本：** https://alexchiachi.github.io/Dao-Is-Simple-The-Open-System-Series-/
 
-# Context & Pricing Multiplier (Taiwan Market, 3X Adjusted)
-This is an ultra-high-ticket, highly selective private advisory service. All copy must be in refined Traditional Chinese (繁體中文 zh-TW), calm, profound, completely free from aggressive marketing hype, and grounded in systems thermodynamics (耗散結構) and Stoic inner governance.
+一份高單價、審核制的私人顧問服務旗艦導引頁。單一檔案、無建置流程、無框架。
 
-Target Audience: C-suite executives, senior founders, high-net-worth creators facing energy dissipation and career bottlenecks (38–55 years old in Taiwan).
+## 倉庫內容
 
-# Precise 3X Pricing Matrix to Render:
-1. Tier 1: 【系統破局・90分鐘生命場域深度對話】
-   - Price: NT$ 26,400 (原 NT$ 8,800 × 3)
-   - Scope: 1-on-1 耗散結構熵增診斷、認知架構重塑、會後核心策略錄音與個人系統路徑圖。
-2. Tier 2: 【中寮山林・3天2夜感官定錨小班工坊】
-   - Price: NT$ 144,000 (原 NT$ 48,000 × 3)
-   - Scope: 私密席次（每班僅限 2 人）。構樹樹皮敲擊工藝、天然黑麥酸種手作、一對一哲學解構、食宿場域全包。
-3. Tier 3 (Flagship): 【一人商業閉環・3 個月全週期親自陪跑】
-   - Price: NT$ 504,000 (原 NT$ 168,000 × 3)
-   - Scope: 嚴苛審核制（每季限定 1–2 位）。含山林體驗 + 國際化數位產品線搭設 (Amazon KDP/Gumroad) + AI 自動化一人流水線完整部署 + 隔週深度覆盤。
+| 檔案 | 內容 |
+| --- | --- |
+| `index.html` | 完整網站。CSS 與 JavaScript 全部內嵌，唯一的外部請求是 Google Fonts |
+| `docs/design-philosophy.md` | 靜構 / Still Scaffold — 這一頁視覺語言所依據的設計哲學 |
+| `docs/brief.md` | 最初的生成指令（歷史文件，內容已不等於現況） |
 
-# Visual Aesthetics & Styling Specifications
-- Framework: Tailwind CSS (via CDN: `<script src="https://cdn.tailwindcss.com"></script>`).
-- Typography:
-  - Headers: Noto Serif TC (Google Fonts: `font-serif`).
-  - Body: Noto Sans TC (Google Fonts: `font-sans`).
-- Color Palette:
-  - Background Canvas: Calm Wabi-Sabi Cream (`bg-[#FAF8F5]` or `#F4F0EA`).
-  - Dark Charcoal Base: Deep Pine Ink (`text-[#1C1F22]`).
-  - Primary Earth Accent: Natural Terracotta (`#8D5B4C` / `bg-[#8D5B4C]`).
-  - Accent Deep Forest: Zen Moss Green (`#2C3E35`).
-  - Card Surfaces: Pure White with subtle drop shadow and border (`bg-white/90 border border-stone-200/80 shadow-sm`).
-- Visual Mood: High-end editorial magazine meets minimalist architectural studio. Generous white space, elegant borders, subtle button micro-interactions.
+## 定位與對象
 
-# Page Sections & Structural Hierarchy
-1. `Header`:
-   - Logo: "大道至簡" with subtitle "生命場域 · 一人商業閉環".
-   - Links: 核心哲學, 服務矩陣, 數位資產, 審核申請.
-2. `Hero Section`:
-   - Headline: 「告別無效增熵，以大道至簡，一人活成一支軍隊。」
-   - Sub-headline: 不是退而求其次的微型創業，而是一場融合東方哲思、耗散結構物理學與數位槓桿的「系統性自我實現」。
-   - CTAs: [預約審核諮詢 (NT$ 26,400)] & [下載 8 頁高階主管單兵轉型策略指南 (免費)].
-3. `Core Philosophy (耗散結構與生命場域)`:
-   - 3 Pillars:
-     1. 物理負熵：打破封閉系統的內耗，建立能量自足的開放秩序。
-     2. 感官接地：構樹樹皮工藝與自然發酵，為大腦徹底降噪。
-     3. 數位槓桿：以 AI 與雲端自動化建構單人流水線，維持極致輕資產。
-4. `Three-Tier Pricing & Offerings`:
-   - Render the 3 pricing cards clearly with distinct visual hierarchy.
-   - Highlight Tier 3 with a "每季限額 2 席｜審核制" badge in Zen Moss Green.
-   - Clearly itemize the value propositions, deliverables, and exact NT$ figures.
-5. `Digital Assets (長尾生態)`:
-   - Show mock covers for:
-     - 英文電子書《The Architecture of Inner Flow》(Amazon KDP / Gumroad).
-     - 開放系統三部曲 (The Open System Series) 研發計畫.
-6. `Interactive Vetting Form (申請審核表單)`:
-   - Embedded interactive form (Name, Email, Current Role/Income Tier, Biggest Systemic Bottleneck).
-   - Dynamic feedback modal on submit: "申請已送出，我們將於 48 小時內審核並寄發行前評估問卷".
-7. `Footer`:
-   - Copyright © 2026 大道至簡. All rights reserved. Made for Solopreneurs.
+繁體中文（zh-TW）。文案沉穩、不使用侵略性行銷語言，基礎是耗散結構的系統熱力學與斯多噶式的內在治理。
 
-# Gemini 3.8 Flash Code Generation Rules
-- Output ONLY valid, executable HTML5 wrapped inside a single ```html code fence.
-- Do NOT abbreviate code with comments like `<!-- rest of the code here -->`. Provide full code from `<!DOCTYPE html>` to `</html>`.
-- Ensure all interactive tabs, mobile menu toggles, and modal forms are fully functional using concise, clean Vanilla JavaScript.
+對象是台灣 38–55 歲的創辦人、C-Level 高階主管與高淨值創作者，共同處境是能量持續逸散與職涯瓶頸。
+
+## 服務矩陣
+
+三階皆為審核制。頁面只陳述現價，不揭露定價沿革。
+
+| | 第一階 | 第二階 | 第三階（旗艦） |
+| --- | --- | --- | --- |
+| 名稱 | 系統破局<br>90 分鐘生命場域深度對話 | 台灣 雲南山林<br>3 天 2 夜感官定錨小班工坊 | 一人商業閉環<br>3 個月全週期親自陪跑 |
+| 價格 | NT$ 26,400 | NT$ 144,000 | NT$ 504,000 |
+| 內容 | 一對一耗散結構熵增診斷<br>認知架構重塑<br>會後核心策略錄音<br>個人系統路徑圖 | 私密席次，每班僅限 2 人<br>地方文化工藝<br>天然黑麥酸種手作<br>一對一哲學解構<br>食宿場域全包 | 嚴苛審核制，每季限定 1–2 位<br>含台灣 雲南山林體驗<br>國際化數位產品線搭設（Amazon KDP / Gumroad）<br>AI 自動化一人流水線完整部署<br>隔週深度覆盤 |
+| 節奏 | 線上進行，會後 7 日內交付路徑圖 | 依季節開班 | 審核通過後排入當季名單 |
+
+第三階帶「每季限額 2 席｜審核制」禪苔綠徽章，並以墨色邊框區隔——不靠陰影浮起。
+
+## 核心哲學：三支柱
+
+1. **物理負熵**（Negentropy）— 打破封閉系統的內耗，建立能量自足的開放秩序。
+2. **感官接地**（Sensory Grounding）— 地方文化工藝與自然發酵，為大腦徹底降噪。體驗地方、等待連結、觀察自然。
+3. **數位槓桿**（Digital Leverage）— 以 AI 與雲端自動化建構單人流水線，維持極致輕資產。
+
+## 頁面結構
+
+1. **導航** — 標誌「大道至簡」與副標「生命場域 · 一人商業閉環」；連結：核心哲學、服務矩陣、數位資產、審核申請。半透明材質只在內容捲到其下方時出現，並標示當前所在章節。
+2. **Hero** — 標題「告別無效增熵，以大道至簡，一人活成一支軍隊。」兩個行動點：預約深度對話 NT$ 26,400、索取 8 頁策略指南。
+3. **核心哲學** — 三支柱，以髮絲線分欄，無卡片。
+4. **服務矩陣** — 三階方案卡。860px 以下改用分段控制器切換。
+5. **數位資產** — 英文電子書《The Architecture of Inner Flow》（Amazon KDP / Gumroad）與開放系統三部曲研發計畫，書封以純 CSS 繪製。
+6. **審核申請表單** — 申請層級、姓名、Email、目前職位與年收級距、目前最大的系統性瓶頸，以及索取策略指南的勾選。上方任一方案的按鈕都會自動帶入對應層級。送出後跳出確認視窗：「申請已送出，我們將於 48 小時內審核並寄發行前評估問卷」，並回報所申請的層級。
+7. **頁尾** — Copyright © 2026 大道至簡. All rights reserved. Made for Solopreneurs.
+
+8 頁策略指南是表單上的勾選項目、以 Email 寄送，不是下載連結——這個頁面沒有後端可以提供檔案。
+
+## 視覺系統
+
+宋體是這一頁的聲音，無襯線只負責被操作的介面層。
+
+| | 字體 |
+| --- | --- |
+| 標題、內文、支柱字符、價格數字 | Noto Serif TC（堆疊中 Songti TC 緊隨其後，Apple 裝置在網路字體載入前即為宋體） |
+| 導航、按鈕、表單、徽章、小標、頁尾 | 系統無襯線 → Noto Sans TC |
+
+字距依字級調整，不用單一值：主標題 -.018em、章節標題 -.012em、卡片標題 0、內文 +.015em。所有字級以 rem 計算，跟隨使用者的瀏覽器字級設定。
+
+| 角色 | 淺色 | 深色 |
+| --- | --- | --- |
+| 底色 | `#FBFBFD` | `#0B0B0C` |
+| 交替底色 | `#F2F0EC` | `#1B1B1D` |
+| 墨色 | `#1C1F22` | `#F3F1EC` |
+| 主色（赤陶） | `#8D5B4C` | `#CE8E79` |
+| 禪苔綠 | `#2C3E35` | `#3C5648` |
+| 錯誤 | `#A8412F` | `#E39181` |
+
+顏色只花在可互動之處——按鈕、連結、焦點框。其餘一律墨色與中性色。深淺兩套主題涵蓋系統偏好、明確指定淺色、明確指定深色三種狀態，並對 `prefers-reduced-motion`、`prefers-reduced-transparency`、`prefers-contrast` 三個訊號各自回應。
+
+## 技術實作
+
+HTML5 + 手寫 CSS + 原生 JavaScript。沒有 Tailwind、沒有框架、沒有建置步驟。
+
+JavaScript 只做四件事：手機選單開合、方案分段控制器、導航材質與當前章節、表單送出後的確認視窗。所有連結都是真實錨點，JavaScript 未執行時頁面仍可完整使用。
+
+互動細節依循 Apple 的流體介面原則：按壓回饋在 100ms 內發生，確認視窗沿進場的路徑退場，表單以 `:user-invalid` 在使用者離開欄位後才提示。
+
+## 部署
+
+GitHub Pages，來源為 `main` 分支根目錄。推送到 `main` 即自動重新部署，無需工作流程檔。
