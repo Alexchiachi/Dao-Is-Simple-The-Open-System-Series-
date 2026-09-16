@@ -72,21 +72,114 @@ function sheet() {
 }
 
 function notify(data) {
+  const level = data.level || '未指定層級';
+  const name = data.name || '未具名';
+  const sheetUrl = SpreadsheetApp.getActiveSpreadsheet().getUrl();
+  const when = Utilities.formatDate(new Date(), 'Asia/Taipei', 'yyyy/MM/dd HH:mm');
+
   MailApp.sendEmail({
     to: NOTIFY_EMAIL,
-    subject: '【大道至簡】新的審核申請：' + (data.name || '未具名'),
-    body: [
-      '申請層級：' + (data.level || ''),
-      '姓名：' + (data.name || ''),
-      'Email：' + (data.email || ''),
-      '職位與年收級距：' + (data.tier || ''),
-      '',
-      '目前最大的系統性瓶頸：',
-      data.bottleneck || '',
-      '',
-      '索取策略指南：' + (data.guide ? '是' : '否'),
-      '',
-      '試算表：' + SpreadsheetApp.getActiveSpreadsheet().getUrl()
-    ].join('\n')
+    name: '大道至簡',
+    replyTo: data.email || NOTIFY_EMAIL,   // 直接按回覆就是回給申請人
+    subject: '【大道至簡】新申請：' + name + '｜' + level.split('・')[0],
+    body: plainBody(data, when, sheetUrl),
+    htmlBody: htmlBody(data, when, sheetUrl)
   });
+}
+
+// 純文字備援，給不顯示 HTML 的收件軟體
+function plainBody(data, when, sheetUrl) {
+  return [
+    '新的審核申請',
+    '',
+    '申請層級：' + (data.level || ''),
+    '姓名：' + (data.name || ''),
+    'Email：' + (data.email || ''),
+    '職位與年收級距：' + (data.tier || ''),
+    '索取策略指南：' + (data.guide ? '是' : '否'),
+    '送出時間：' + when,
+    '',
+    '目前最大的系統性瓶頸：',
+    data.bottleneck || '（未填）',
+    '',
+    '試算表：' + sheetUrl
+  ].join('\n');
+}
+
+/**
+ * 信件版面刻意與網站同一套語言：宋體標題、赤陶主色、髮絲線分隔。
+ * 全部使用表格與行內樣式——郵件軟體對 flexbox、grid 與外部樣式表的支援不可靠。
+ */
+function htmlBody(data, when, sheetUrl) {
+  const SERIF = "Georgia,'Songti TC','Songti SC','Times New Roman',serif";
+  const SANS = "-apple-system,'Segoe UI','PingFang TC','Microsoft JhengHei',Arial,sans-serif";
+  const INK = '#1C1F22', MUTED = '#6E6A66', FAINT = '#96918B';
+  const LINE = '#E4DFD8', ACCENT = '#8D5B4C', MOSS = '#2C3E35';
+
+  const label = 'font-family:' + SANS + ';font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:' + FAINT + ';margin:0;';
+  const value = 'font-family:' + SANS + ';font-size:15px;line-height:1.6;color:' + INK + ';margin:4px 0 0;';
+
+  const rows = [
+    ['姓名', esc(data.name)],
+    ['Email', data.email ? '<a href="mailto:' + esc(data.email) + '" style="color:' + ACCENT + ';text-decoration:none;">' + esc(data.email) + '</a>' : '—'],
+    ['職位與年收級距', esc(data.tier)],
+    ['索取策略指南', data.guide ? '是' : '否'],
+    ['送出時間', when]
+  ].map(function (r) {
+    return '<tr><td style="padding:0 0 18px;">' +
+      '<p style="' + label + '">' + r[0] + '</p>' +
+      '<p style="' + value + '">' + (r[1] || '—') + '</p>' +
+      '</td></tr>';
+  }).join('');
+
+  const bottleneck = data.bottleneck
+    ? esc(data.bottleneck).replace(/\n/g, '<br>')
+    : '（未填）';
+
+  return [
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F2F0EC;padding:30px 12px;margin:0;">',
+    '<tr><td align="center">',
+    '<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background:#FFFFFF;border:1px solid ' + LINE + ';border-radius:10px;">',
+
+    // 標頭：層級是這封信最重要的一件事
+    '<tr><td style="padding:34px 34px 0;">',
+    '<p style="font-family:' + SANS + ';font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:' + FAINT + ';margin:0 0 14px;">大道至簡 · 審核申請</p>',
+    '<p style="font-family:' + SERIF + ';font-size:21px;line-height:1.45;color:' + INK + ';margin:0;">' + esc(data.level) + '</p>',
+    '</td></tr>',
+
+    '<tr><td style="padding:26px 34px 0;"><div style="height:1px;background:' + LINE + ';font-size:0;line-height:0;">&nbsp;</div></td></tr>',
+
+    // 欄位
+    '<tr><td style="padding:26px 34px 0;">',
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">' + rows + '</table>',
+    '</td></tr>',
+
+    // 瓶頸：這段最長也最重要，給它自己的區塊
+    '<tr><td style="padding:8px 34px 0;">',
+    '<p style="' + label + 'margin-bottom:10px;">目前最大的系統性瓶頸</p>',
+    '<div style="font-family:' + SERIF + ';font-size:15px;line-height:1.85;color:' + INK + ';border-left:2px solid ' + LINE + ';padding:2px 0 2px 16px;">' + bottleneck + '</div>',
+    '</td></tr>',
+
+    // 動作
+    '<tr><td style="padding:30px 34px 0;">',
+    '<a href="mailto:' + esc(data.email) + '" style="display:inline-block;background:' + ACCENT + ';color:#FFFFFF;font-family:' + SANS + ';font-size:15px;font-weight:500;text-decoration:none;padding:13px 26px;border-radius:980px;">回覆 ' + esc(data.name || '申請人') + '</a>',
+    '</td></tr>',
+    '<tr><td style="padding:18px 34px 34px;">',
+    '<a href="' + sheetUrl + '" style="font-family:' + SANS + ';font-size:14px;color:' + ACCENT + ';text-decoration:none;">在試算表中檢視全部申請 &rsaquo;</a>',
+    '</td></tr>',
+
+    '</table>',
+    '<p style="font-family:' + SANS + ';font-size:11px;color:' + FAINT + ';margin:18px 0 0;">本信由網站的審核申請表單自動寄出。</p>',
+    '</td></tr></table>'
+  ].join('');
+}
+
+// 申請人填的內容會進到 HTML 裡，一律轉義，避免內容破壞版面或夾帶標記
+function esc(v) {
+  return String(v == null ? '' : v)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
