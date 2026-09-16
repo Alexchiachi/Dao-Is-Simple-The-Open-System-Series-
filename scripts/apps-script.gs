@@ -11,7 +11,9 @@
  *       - 執行身分：我
  *       - 誰可以存取：**所有人**（必須是這個，網頁才能送出資料）
  *  6. 按「部署」，第一次會要求授權，同意即可。
- *  7. 複製產生的「網頁應用程式網址」，形如：
+ *  7. 想先確認一切正常：在函式選單選 sendTestApplication，按「執行」。
+ *     試算表應出現一列測試資料，信箱應收到一封通知信。
+ *  8. 複製產生的「網頁應用程式網址」，形如：
  *       https://script.google.com/macros/s/AKfycb....../exec
  *     把這串網址交回，我填進網頁裡。
  *
@@ -20,7 +22,7 @@
  */
 
 const SHEET_NAME = '申請紀錄';
-const NOTIFY_EMAIL = '';   // 填入信箱即在每次申請時寄出通知；留空則不寄
+const NOTIFY_EMAIL = 'jianchiachi@gmail.com';   // 每次申請寄出通知；留空則不寄
 
 const HEADERS = ['送出時間', '申請層級', '姓名', 'Email', '職位與年收級距', '系統性瓶頸', '索取策略指南'];
 
@@ -72,6 +74,12 @@ function sheet() {
 }
 
 function notify(data) {
+  if (!data) {
+    throw new Error(
+      'notify() 是由 doPost 自動呼叫的，不要在編輯器直接執行它。' +
+      '要寄一封測試信，請在函式選單改選 sendTestApplication 再按執行。'
+    );
+  }
   const level = data.level || '未指定層級';
   const name = data.name || '未具名';
   const sheetUrl = SpreadsheetApp.getActiveSpreadsheet().getUrl();
@@ -182,6 +190,28 @@ function esc(v) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
+}
+
+/**
+ * 在編輯器的函式選單選這一個，按「執行」，會送出一筆完整的測試申請：
+ * 試算表寫入一列，並寄出一封通知信到 NOTIFY_EMAIL。
+ * 用來確認授權、試算表與信箱三件事都正常。測試資料可直接從試算表刪掉。
+ */
+function sendTestApplication() {
+  const result = doPost({
+    postData: {
+      contents: JSON.stringify({
+        level: '第一階・90 分鐘生命場域深度對話（NT$ 26,400）',
+        name: '測試申請',
+        email: NOTIFY_EMAIL || 'test@example.com',
+        tier: '創辦人 / 負責人・年收 300–1,000 萬',
+        bottleneck: '這是一筆測試資料，確認無誤後可直接從試算表刪除。\n第二行用來確認換行有正確顯示。',
+        guide: true
+      })
+    }
+  });
+  console.log('回應：' + result.getContent());
+  console.log(NOTIFY_EMAIL ? '通知信已寄往 ' + NOTIFY_EMAIL : 'NOTIFY_EMAIL 尚未填寫，因此沒有寄信');
 }
 
 // ContentService 的 JSON 回應——doPost 與 doGet 都靠它回話
