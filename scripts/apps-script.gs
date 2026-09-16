@@ -183,3 +183,9 @@ function esc(v) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 }
+
+// ContentService 的 JSON 回應——doPost 與 doGet 都靠它回話
+function json(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
