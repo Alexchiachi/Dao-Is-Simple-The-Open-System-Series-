@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>大道至簡 一人商業閉環</title>
+<meta name="description" content="生命場域與一人商業閉環旗艦導引：以耗散結構、感官接地與數位槓桿，重建能量自足的開放系統。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600&display=swap">
+<style>
+:root{
+  --ground:#FBFBFD;
+  --surface:#FFFFFF;
+  --alt:#F2F0EC;
+  --ink:#1C1F22;
+  --muted:#6E6A66;
+  --faint:#96918B;
+  --line:rgba(28,31,34,.13);
+  --line-soft:rgba(28,31,34,.07);
+  --accent:#8D5B4C;
+  --accent-press:#754739;
+  --accent-wash:rgba(141,91,76,.09);
+  --moss:#2C3E35;
+  --moss-ink:#E7EDE8;
+  --nav-bg:rgba(251,251,253,.72);
+  --shadow:0 1px 2px rgba(28,31,34,.05), 0 8px 26px rgba(28,31,34,.06);
+  --shadow-lift:0 2px 6px rgba(28,31,34,.07), 0 18px 46px rgba(28,31,34,.11);
+  --radius:20px;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro TC","SF Pro Text","PingFang TC","Noto Sans TC","Helvetica Neue",Arial,sans-serif;
+  --serif:"Noto Serif TC","Songti TC","Source Han Serif TC",Georgia,serif;
+  --shell:1040px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0B0B0C;
+    --surface:#161617;
+    --alt:#1B1B1D;
+    --ink:#F3F1EC;
+    --muted:#A49E96;
+    --faint:#7C766F;
+    --line:rgba(243,241,236,.16);
+    --line-soft:rgba(243,241,236,.08);
+    --accent:#CE8E79;
+    --accent-press:#E0A791;
+    --accent-wash:rgba(206,142,121,.14);
+    --moss:#3C5648;
+    --moss-ink:#EAF2EC;
+    --nav-bg:rgba(11,11,12,.72);
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px rgba(0,0,0,.42);
+    --shadow-lift:0 2px 8px rgba(0,0,0,.55), 0 22px 54px rgba(0,0,0,.5);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0B0B0C;
+  --surface:#161617;
+  --alt:#1B1B1D;
+  --ink:#F3F1EC;
+  --muted:#A49E96;
+  --faint:#7C766F;
+  --line:rgba(243,241,236,.16);
+  --line-soft:rgba(243,241,236,.08);
+  --accent:#CE8E79;
+  --accent-press:#E0A791;
+  --accent-wash:rgba(206,142,121,.14);
+  --moss:#3C5648;
+  --moss-ink:#EAF2EC;
+  --nav-bg:rgba(11,11,12,.72);
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 10px 30px rgba(0,0,0,.42);
+  --shadow-lift:0 2px 8px rgba(0,0,0,.55), 0 22px 54px rgba(0,0,0,.5);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.65;
+  font-weight:400;
+  letter-spacing:.01em;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%}
+[hidden]{display:none!important}
+a{color:var(--accent);text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+/* ---------- shell ---------- */
+.shell{width:100%;max-width:var(--shell);margin-inline:auto;padding-inline:22px}
+.section{padding-block:clamp(72px,11vw,132px)}
+.section--alt{background:var(--alt)}
+.section--hair{border-top:1px solid var(--line-soft)}
+[id]{scroll-margin-top:76px}
+
+/* ---------- type ---------- */
+h1,h2,h3,h4{margin:0;text-wrap:balance;letter-spacing:-.022em;font-weight:700;line-height:1.14}
+p{margin:0}
+.eyebrow{
+  font-size:13px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 18px;
+}
+.section-title{font-size:clamp(30px,4.6vw,48px)}
+.section-lede{margin-top:20px;max-width:60ch;color:var(--muted);font-size:clamp(16px,1.6vw,19px);font-weight:300}
+.serif{font-family:var(--serif);font-weight:600;letter-spacing:0}
+
+/* ---------- nav ---------- */
+.nav{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:60;
+  background:var(--nav-bg);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid var(--line-soft);
+}
+.nav-inner{
+  max-width:var(--shell);margin-inline:auto;padding-inline:22px;
+  height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.brand{display:flex;align-items:baseline;gap:10px;color:var(--ink)}
+.brand b{font-family:var(--serif);font-size:19px;font-weight:600;letter-spacing:.06em}
+.brand span{font-size:11px;color:var(--faint);letter-spacing:.08em}
+.nav-links{display:flex;gap:30px;align-items:center}
+.nav-links a{font-size:13.5px;color:var(--ink);opacity:.82;transition:opacity .2s}
+.nav-links a:hover{opacity:1}
+.nav-toggle{
+  display:none;background:none;border:0;padding:8px;margin-right:-8px;cursor:pointer;color:var(--ink);
+}
+.nav-toggle svg{display:block}
+.nav-panel{border-top:1px solid var(--line-soft);background:var(--nav-bg)}
+.nav-panel ul{list-style:none;margin:0;padding:8px 22px 20px;display:grid;gap:2px}
+.nav-panel a{display:block;padding:13px 0;font-size:19px;font-weight:500;color:var(--ink);border-bottom:1px solid var(--line-soft)}
+@media (max-width:820px){
+  .nav-links{display:none}
+  .nav-toggle{display:block}
+}
+@media (min-width:821px){.nav-panel{display:none!important}}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:inherit;font-size:16px;font-weight:500;letter-spacing:.01em;
+  padding:13px 26px;border-radius:980px;border:1px solid transparent;cursor:pointer;
+  transition:background-color .22s ease,color .22s ease,border-color .22s ease,transform .22s ease;
+}
+.btn--fill{background:var(--accent);color:#fff}
+.btn--fill:hover{background:var(--accent-press)}
+.btn--ghost{background:transparent;color:var(--accent);border-color:var(--accent)}
+.btn--ghost:hover{background:var(--accent-wash)}
+.btn:active{transform:scale(.975)}
+.chev{display:inline-flex;align-items:center;gap:5px;font-size:16px;font-weight:400;color:var(--accent)}
+.chev::after{content:"›";font-size:20px;line-height:1;transform:translateY(-1px);transition:transform .22s ease}
+.chev:hover::after{transform:translate(4px,-1px)}
+@media (prefers-reduced-motion:reduce){
+  .btn,.chev::after{transition:none}
+  .btn:active{transform:none}
+}
+
+/* ---------- hero ---------- */
+.hero{padding-block:clamp(64px,10vw,116px) clamp(56px,8vw,96px);text-align:center;overflow:hidden}
+.hero h1{
+  font-size:clamp(34px,6.4vw,68px);line-height:1.1;letter-spacing:-.032em;
+  max-width:16ch;margin-inline:auto;
+}
+.hero h1 .soft{color:var(--accent)}
+.hero h1 .nb{display:none}
+@media (min-width:760px){.hero h1 .nb{display:inline}}
+.hero-sub{
+  margin:26px auto 0;max-width:46ch;color:var(--muted);
+  font-size:clamp(16px,2vw,21px);font-weight:300;line-height:1.72;
+}
+.hero-cta{margin-top:38px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.hero-note{margin-top:20px;font-size:13px;color:var(--faint)}
+.hero-rule{
+  margin:clamp(48px,7vw,78px) auto 0;max-width:720px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--line),transparent);
+}
+.hero-marks{
+  margin-top:26px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 34px;
+  font-size:13px;color:var(--faint);letter-spacing:.04em;
+}
+@media (prefers-reduced-motion:no-preference){
+  .rise{animation:rise .8s cubic-bezier(.22,.68,.32,1) both}
+  .rise-2{animation-delay:.09s}
+  .rise-3{animation-delay:.18s}
+  .rise-4{animation-delay:.27s}
+  @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+}
+
+/* ---------- pillars ---------- */
+.pillars{margin-top:clamp(40px,6vw,64px);display:grid;gap:18px;grid-template-columns:repeat(3,1fr)}
+.pillar{
+  background:var(--surface);border:1px solid var(--line-soft);border-radius:var(--radius);
+  padding:34px 30px 32px;display:flex;flex-direction:column;gap:14px;
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.pillar:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.pillar .glyph{font-family:var(--serif);font-size:38px;line-height:1;color:var(--accent)}
+.pillar h3{font-size:21px}
+.pillar p{color:var(--muted);font-size:15.5px;line-height:1.75;font-weight:300}
+.pillar .term{font-size:12.5px;letter-spacing:.1em;color:var(--faint);text-transform:uppercase}
+@media (max-width:820px){.pillars{grid-template-columns:1fr}.pillar:hover{transform:none}}
+
+/* ---------- tiers ---------- */
+.segmented{
+  display:none;margin:36px auto 0;max-width:520px;padding:3px;gap:3px;
+  background:var(--line-soft);border-radius:12px;
+}
+.segmented button{
+  flex:1;font-family:inherit;font-size:13.5px;font-weight:500;color:var(--ink);
+  background:transparent;border:0;border-radius:9px;padding:9px 6px;cursor:pointer;
+}
+.segmented button[aria-pressed="true"]{background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+@media (max-width:860px){.segmented{display:flex}}
+
+.tiers{margin-top:clamp(36px,5vw,56px);display:grid;gap:18px;grid-template-columns:repeat(3,1fr);align-items:start}
+.tier{
+  position:relative;background:var(--surface);border:1px solid var(--line-soft);
+  border-radius:var(--radius);padding:34px 30px 32px;display:flex;flex-direction:column;
+  box-shadow:var(--shadow);
+}
+.tier--flagship{border-color:var(--accent-wash);box-shadow:var(--shadow-lift)}
+.badge{
+  align-self:flex-start;background:var(--moss);color:var(--moss-ink);
+  font-size:12px;letter-spacing:.06em;padding:6px 13px;border-radius:980px;margin-bottom:18px;
+}
+.tier-step{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+.tier h3{font-size:22px;line-height:1.4;letter-spacing:-.01em}
+.badge--slot{visibility:hidden}
+@media (max-width:860px){.badge--slot{display:none}}
+@media (min-width:861px){.tier h3{min-height:4.2em}}
+.tier .price{
+  margin-top:22px;font-size:clamp(30px,3.4vw,38px);font-weight:700;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;
+}
+.tier .price small{font-size:15px;font-weight:400;letter-spacing:0;margin-right:4px;color:var(--muted)}
+.tier .was{margin-top:6px;font-size:13px;color:var(--faint);font-variant-numeric:tabular-nums}
+.tier ul{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:13px;align-content:start;flex:1;border-top:1px solid var(--line-soft);padding-top:24px}
+.tier li{display:grid;grid-template-columns:16px 1fr;gap:11px;font-size:15px;line-height:1.66;color:var(--muted);font-weight:300}
+.tier li::before{content:"";width:6px;height:6px;margin-top:11px;border-radius:50%;background:var(--accent)}
+.tier .tier-foot{margin-top:28px;padding-top:0}
+.tier .tier-foot .btn{width:100%}
+.tier .cadence{margin-top:14px;font-size:12.5px;color:var(--faint);text-align:center}
+@media (max-width:860px){
+  .tiers{grid-template-columns:1fr}
+  .tier:not(.is-active){display:none}
+}
+
+/* ---------- assets ---------- */
+.assets{margin-top:clamp(40px,6vw,64px);display:grid;gap:22px;grid-template-columns:repeat(2,1fr)}
+.asset{
+  background:var(--surface);border:1px solid var(--line-soft);border-radius:var(--radius);
+  padding:30px;display:grid;grid-template-columns:150px 1fr;gap:28px;align-items:center;
+}
+.cover{
+  aspect-ratio:2/3;max-width:100%;border-radius:6px;padding:20px 17px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  box-shadow:var(--shadow-lift);position:relative;overflow:hidden;
+}
+.cover--flow{background:linear-gradient(168deg,#2C3E35 0%,#16211C 100%);color:#EAF2EC}
+.cover--series{background:linear-gradient(168deg,#8D5B4C 0%,#4E2F26 100%);color:#F7EEE9}
+.cover .kicker{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;opacity:.72}
+.cover .ttl{font-family:var(--serif);font-size:17px;line-height:1.3;letter-spacing:0}
+.cover .ttl em{display:block;font-style:normal;font-size:11px;opacity:.7;margin-top:8px;letter-spacing:.05em}
+.cover .sig{font-size:9px;letter-spacing:.16em;opacity:.66}
+.cover::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(105deg,rgba(255,255,255,.14) 0 38%,transparent 60%);
+  pointer-events:none;
+}
+.asset h3{font-size:19px;line-height:1.45}
+.asset p{margin-top:12px;color:var(--muted);font-size:14.5px;line-height:1.72;font-weight:300}
+.asset .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:11.5px;letter-spacing:.05em;color:var(--muted);border:1px solid var(--line);border-radius:980px;padding:4px 11px}
+@media (max-width:900px){.assets{grid-template-columns:1fr}}
+@media (max-width:460px){.asset{grid-template-columns:118px 1fr;gap:20px;padding:24px}}
+
+/* ---------- form ---------- */
+.apply-grid{margin-top:clamp(40px,6vw,60px);display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(28px,5vw,56px);align-items:start}
+.apply-aside p{color:var(--muted);font-size:15.5px;line-height:1.78;font-weight:300}
+.apply-aside dl{margin:26px 0 0;display:grid;gap:18px}
+.apply-aside dt{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.apply-aside dd{margin:5px 0 0;font-size:15px;color:var(--ink);font-weight:400}
+form{
+  background:var(--surface);border:1px solid var(--line-soft);border-radius:var(--radius);
+  padding:clamp(24px,4vw,36px);display:grid;gap:20px;box-shadow:var(--shadow);
+}
+.field{display:grid;gap:8px}
+label{font-size:13.5px;font-weight:500;letter-spacing:.02em}
+input,select,textarea{
+  font-family:inherit;font-size:16px;color:var(--ink);background:var(--ground);
+  border:1px solid var(--line);border-radius:12px;padding:13px 14px;width:100%;
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+textarea{resize:vertical;min-height:112px;line-height:1.65}
+select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 20px) 21px,calc(100% - 14px) 21px;background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:44px}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-wash)}
+.hint{font-size:12.5px;color:var(--faint)}
+.optin{display:flex;gap:11px;align-items:flex-start;font-size:14px;color:var(--muted);font-weight:300}
+.optin input{width:18px;height:18px;flex:none;margin-top:3px;accent-color:var(--accent);padding:0}
+form .btn{width:100%}
+.legal{font-size:12.5px;color:var(--faint);text-align:center;line-height:1.7}
+@media (max-width:860px){.apply-grid{grid-template-columns:1fr}}
+
+/* ---------- modal ---------- */
+.modal{
+  position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:22px;
+  background:rgba(20,18,16,.42);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+}
+.modal-card{
+  background:var(--surface);border-radius:22px;max-width:420px;width:100%;
+  padding:38px 32px 30px;text-align:center;box-shadow:var(--shadow-lift);
+  border:1px solid var(--line-soft);
+}
+@media (prefers-reduced-motion:no-preference){
+  .modal-card{animation:pop .34s cubic-bezier(.22,.68,.32,1) both}
+  @keyframes pop{from{opacity:0;transform:scale(.94) translateY(10px)}to{opacity:1;transform:none}}
+}
+.seal{
+  width:54px;height:54px;margin:0 auto 20px;border-radius:50%;
+  background:var(--accent-wash);color:var(--accent);
+  display:grid;place-items:center;font-size:24px;
+}
+.modal-card h3{font-size:21px}
+.modal-card p{margin-top:12px;color:var(--muted);font-size:15px;line-height:1.75;font-weight:300}
+.modal-card .btn{margin-top:26px;width:100%}
+
+/* ---------- footer ---------- */
+.foot{border-top:1px solid var(--line-soft);background:var(--alt);padding-block:44px}
+.foot-inner{display:flex;flex-wrap:wrap;gap:18px 34px;justify-content:space-between;align-items:center}
+.foot p{font-size:12.5px;color:var(--faint);line-height:1.8}
+.foot nav{display:flex;flex-wrap:wrap;gap:22px}
+.foot nav a{font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <b>大道至簡</b><span>生命場域 · 一人商業閉環</span>
+    </a>
+    <nav class="nav-links" aria-label="主要導覽">
+      <a href="#philosophy">核心哲學</a>
+      <a href="#offerings">服務矩陣</a>
+      <a href="#assets">數位資產</a>
+      <a href="#apply">審核申請</a>
+    </nav>
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-panel" aria-label="開啟選單">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+        <path d="M3 8h16M3 14h16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+  <div class="nav-panel" id="nav-panel" hidden>
+    <ul>
+      <li><a href="#philosophy">核心哲學</a></li>
+      <li><a href="#offerings">服務矩陣</a></li>
+      <li><a href="#assets">數位資產</a></li>
+      <li><a href="#apply">審核申請</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="shell">
+      <h1 class="rise">告別無效增熵，以大道至簡，<br class="nb"><span class="soft">一人活成一支軍隊。</span></h1>
+      <p class="hero-sub rise rise-2">不是退而求其次的微型創業，而是一場融合東方哲思、耗散結構物理學與數位槓桿的「系統性自我實現」。</p>
+      <div class="hero-cta rise rise-3">
+        <a class="btn btn--fill" href="#apply">預約審核諮詢 NT$ 26,400</a>
+        <a class="btn btn--ghost" href="#apply">取得 8 頁高階主管單兵轉型策略指南</a>
+      </div>
+      <p class="hero-note rise rise-3">策略指南免費，以 Email 寄送；諮詢席次採審核制。</p>
+      <div class="hero-rule rise rise-4"></div>
+      <div class="hero-marks rise rise-4">
+        <span>每季僅收 1–2 位全週期學員</span>
+        <span>工坊每班上限 2 人</span>
+        <span>服務對象 38–55 歲創辦人與高階主管</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="philosophy">
+    <div class="shell">
+      <p class="eyebrow">核心哲學</p>
+      <h2 class="section-title">耗散結構，與一座能自我維持的生命場域。</h2>
+      <p class="section-lede">封閉系統必然走向熵增：行程滿載、決策疲勞、情緒耗竭。開放系統則不同——它持續與外界交換能量，在遠離平衡之處長出新的秩序。這三根支柱，是把一個人重新打開成開放系統的方法。</p>
+      <div class="pillars">
+        <article class="pillar">
+          <span class="glyph" aria-hidden="true">熵</span>
+          <p class="term">Negentropy</p>
+          <h3>物理負熵</h3>
+          <p>打破封閉系統的內耗，建立能量自足的開放秩序。先盤點能量的流入與逸散，再重寫你的時間、金流與注意力分配，讓秩序由系統本身持續產生。</p>
+        </article>
+        <article class="pillar">
+          <span class="glyph" aria-hidden="true">感</span>
+          <p class="term">Sensory Grounding</p>
+          <h3>感官接地</h3>
+          <p>構樹樹皮工藝與自然發酵，為大腦徹底降噪。敲打、等待、觀察菌相——以身體尺度的勞動把過度抽象的心智重新錨定回真實世界。</p>
+        </article>
+        <article class="pillar">
+          <span class="glyph" aria-hidden="true">槓</span>
+          <p class="term">Digital Leverage</p>
+          <h3>數位槓桿</h3>
+          <p>以 AI 與雲端自動化建構單人流水線，維持極致輕資產。沒有團隊、沒有庫存、沒有固定成本，只有一條能在你睡著時繼續運轉的產線。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="offerings">
+    <div class="shell">
+      <p class="eyebrow">服務矩陣</p>
+      <h2 class="section-title">三個層級，一條完整路徑。</h2>
+      <p class="section-lede">從一次深度診斷，到山林中的感官定錨，再到三個月的全週期陪跑。每一階都可獨立運作，也可依序推進。</p>
+
+      <div class="segmented" id="tier-switch" role="group" aria-label="選擇方案層級">
+        <button type="button" data-tier="t1" aria-pressed="false">深度對話</button>
+        <button type="button" data-tier="t2" aria-pressed="false">山林工坊</button>
+        <button type="button" data-tier="t3" aria-pressed="true">全週期陪跑</button>
+      </div>
+
+      <div class="tiers" id="tiers">
+        <article class="tier" id="t1">
+          <span class="badge badge--slot" aria-hidden="true">席次開放中</span>
+          <p class="tier-step">第一階</p>
+          <h3>系統破局<br>90 分鐘生命場域深度對話</h3>
+          <p class="price"><small>NT$</small>26,400</p>
+          <p class="was">原 NT$ 8,800 × 3 調整</p>
+          <ul>
+            <li>一對一耗散結構熵增診斷</li>
+            <li>認知架構重塑</li>
+            <li>會後核心策略錄音</li>
+            <li>個人系統路徑圖</li>
+          </ul>
+          <div class="tier-foot"><a class="btn btn--ghost" href="#apply">預約深度對話</a></div>
+          <p class="cadence">線上進行，會後 7 日內交付路徑圖</p>
+        </article>
+
+        <article class="tier" id="t2">
+          <span class="badge badge--slot" aria-hidden="true">席次開放中</span>
+          <p class="tier-step">第二階</p>
+          <h3>中寮山林<br>3 天 2 夜感官定錨小班工坊</h3>
+          <p class="price"><small>NT$</small>144,000</p>
+          <p class="was">原 NT$ 48,000 × 3 調整</p>
+          <ul>
+            <li>私密席次，每班僅限 2 人</li>
+            <li>構樹樹皮敲擊工藝</li>
+            <li>天然黑麥酸種手作</li>
+            <li>一對一哲學解構</li>
+            <li>食宿場域全包</li>
+          </ul>
+          <div class="tier-foot"><a class="btn btn--ghost" href="#apply">申請工坊席次</a></div>
+          <p class="cadence">南投中寮，依季節開班</p>
+        </article>
+
+        <article class="tier tier--flagship is-active" id="t3">
+          <span class="badge">每季限額 2 席｜審核制</span>
+          <p class="tier-step">第三階 · 旗艦</p>
+          <h3>一人商業閉環<br>3 個月全週期親自陪跑</h3>
+          <p class="price"><small>NT$</small>504,000</p>
+          <p class="was">原 NT$ 168,000 × 3 調整</p>
+          <ul>
+            <li>嚴苛審核制，每季限定 1–2 位</li>
+            <li>含中寮山林體驗</li>
+            <li>國際化數位產品線搭設（Amazon KDP / Gumroad）</li>
+            <li>AI 自動化一人流水線完整部署</li>
+            <li>隔週深度覆盤</li>
+          </ul>
+          <div class="tier-foot"><a class="btn btn--fill" href="#apply">提交審核申請</a></div>
+          <p class="cadence">審核通過後排入當季名單</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="assets">
+    <div class="shell">
+      <p class="eyebrow">數位資產</p>
+      <h2 class="section-title">長尾生態：讓文字先於你抵達。</h2>
+      <p class="section-lede">一人商業閉環的另一半，是能夠獨立運轉的知識產品線。以下是目前已上線與研發中的兩條主線。</p>
+      <div class="assets">
+        <article class="asset">
+          <div class="cover cover--flow" role="img" aria-label="英文電子書《The Architecture of Inner Flow》書封">
+            <span class="kicker">The Open System Series</span>
+            <span class="ttl">The Architecture of Inner Flow<em>Chia-Chi Chien</em></span>
+            <span class="sig">KDP · GUMROAD</span>
+          </div>
+          <div>
+            <h3>《The Architecture of Inner Flow》</h3>
+            <p>以耗散結構為骨架的英文電子書，寫給在高壓職位上感覺能量持續逸散的專業工作者。已於 Amazon KDP 與 Gumroad 上架。</p>
+            <div class="meta"><span class="tag">英文</span><span class="tag">Amazon KDP</span><span class="tag">Gumroad</span></div>
+          </div>
+        </article>
+        <article class="asset">
+          <div class="cover cover--series" role="img" aria-label="開放系統三部曲研發計畫書封">
+            <span class="kicker">研發計畫 · In Development</span>
+            <span class="ttl">開放系統三部曲<em>The Open System Series</em></span>
+            <span class="sig">負熵計畫</span>
+          </div>
+          <div>
+            <h3>開放系統三部曲</h3>
+            <p>從物理負熵、感官接地到數位槓桿，三冊各自對應一根支柱，逐步展開一個人如何成為持續與世界交換能量的開放系統。研發中。</p>
+            <div class="meta"><span class="tag">繁體中文</span><span class="tag">三冊</span><span class="tag">研發中</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="apply">
+    <div class="shell">
+      <p class="eyebrow">審核申請</p>
+      <h2 class="section-title">先確認彼此合適，再談合作。</h2>
+      <div class="apply-grid">
+        <div class="apply-aside">
+          <p>所有層級皆採審核制。我們寧可少收，也不願讓一個錯配的席次消耗雙方的能量。請據實填寫，這份表單本身就是診斷的一部分。</p>
+          <dl>
+            <dt>審核時間</dt>
+            <dd>48 小時內回覆</dd>
+            <dt>後續流程</dt>
+            <dd>寄發行前評估問卷，再安排時段</dd>
+            <dt>資料原則</dt>
+            <dd>僅用於本次審核，不對外揭露</dd>
+          </dl>
+        </div>
+
+        <form id="vetting-form" novalidate>
+          <div class="field">
+            <label for="applicant-name">姓名</label>
+            <input type="text" id="applicant-name" name="name" autocomplete="name" required placeholder="您的姓名">
+          </div>
+          <div class="field">
+            <label for="applicant-email">Email</label>
+            <input type="email" id="applicant-email" name="email" autocomplete="email" required placeholder="name@example.com">
+          </div>
+          <div class="field">
+            <label for="applicant-tier">目前職位與年收級距</label>
+            <select id="applicant-tier" name="tier" required>
+              <option value="" selected disabled>請選擇一項</option>
+              <option>創辦人 / 負責人・年收 300 萬以下</option>
+              <option>創辦人 / 負責人・年收 300–1,000 萬</option>
+              <option>創辦人 / 負責人・年收 1,000 萬以上</option>
+              <option>C-Level 高階主管・年薪 300–600 萬</option>
+              <option>C-Level 高階主管・年薪 600 萬以上</option>
+              <option>高淨值創作者 / 專業工作者</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="applicant-bottleneck">目前最大的系統性瓶頸</label>
+            <textarea id="applicant-bottleneck" name="bottleneck" required placeholder="例如：營收仰賴我個人時間、團隊擴編後決策品質下降、長期處於高耗能低產出的狀態⋯⋯"></textarea>
+            <p class="hint">越具體，審核與行前問卷越能對準你的實際處境。</p>
+          </div>
+          <label class="optin" for="guide-optin">
+            <input type="checkbox" id="guide-optin" name="guide" checked>
+            <span>同時索取《8 頁高階主管單兵轉型策略指南》，以 Email 寄送。</span>
+          </label>
+          <button class="btn btn--fill" type="submit">送出審核申請</button>
+          <p class="legal">送出即表示同意我們為本次審核與行前評估使用上述資料。</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="shell foot-inner">
+    <p>Copyright © 2026 大道至簡. All rights reserved.<br>Made for Solopreneurs.</p>
+    <nav aria-label="頁尾導覽">
+      <a href="#philosophy">核心哲學</a>
+      <a href="#offerings">服務矩陣</a>
+      <a href="#assets">數位資產</a>
+      <a href="#apply">審核申請</a>
+    </nav>
+  </div>
+</footer>
+
+<div class="modal" id="confirm-modal" hidden role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+  <div class="modal-card">
+    <div class="seal" aria-hidden="true">✓</div>
+    <h3 id="confirm-title">申請已送出</h3>
+    <p>我們將於 48 小時內審核並寄發行前評估問卷。</p>
+    <button class="btn btn--ghost" type="button" id="confirm-close">關閉</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var toggle = document.getElementById('nav-toggle');
+  var panel = document.getElementById('nav-panel');
+
+  function setMenu(open) {
+    panel.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? '關閉選單' : '開啟選單');
+  }
+  toggle.addEventListener('click', function () {
+    setMenu(panel.hidden);
+  });
+  panel.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') setMenu(false);
+  });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 820 && !panel.hidden) setMenu(false);
+  });
+
+  var seg = document.getElementById('tier-switch');
+  var tiers = document.getElementById('tiers');
+  seg.addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-tier]');
+    if (!btn) return;
+    Array.prototype.forEach.call(seg.querySelectorAll('button'), function (b) {
+      b.setAttribute('aria-pressed', String(b === btn));
+    });
+    Array.prototype.forEach.call(tiers.querySelectorAll('.tier'), function (card) {
+      card.classList.toggle('is-active', card.id === btn.dataset.tier);
+    });
+  });
+
+  var form = document.getElementById('vetting-form');
+  var modal = document.getElementById('confirm-modal');
+  var close = document.getElementById('confirm-close');
+  var lastFocus = null;
+
+  function closeModal() {
+    modal.hidden = true;
+    if (lastFocus) lastFocus.focus();
+  }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    lastFocus = document.activeElement;
+    modal.hidden = false;
+    close.focus();
+    form.reset();
+  });
+  close.addEventListener('click', closeModal);
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !modal.hidden) closeModal();
+  });
+})();
+</script>
+</body>
+</html>
