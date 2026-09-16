@@ -227,7 +227,6 @@ p{margin:0}
   font-variant-numeric:tabular-nums;
 }
 .tier .price small{font-size:15.5px;font-weight:400;letter-spacing:0;margin-right:4px;color:var(--muted)}
-.tier .was{margin-top:8px;font-size:12.5px;color:var(--faint);font-variant-numeric:tabular-nums}
 .tier ul{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:13px;align-content:start;flex:1;border-top:1px solid var(--line-soft);padding-top:24px}
 .tier li{display:grid;grid-template-columns:14px 1fr;gap:12px;font-size:15.5px;line-height:1.7;color:var(--muted);font-weight:300}
 .tier li::before{content:"";height:1px;margin-top:14px;background:var(--line)}
@@ -308,6 +307,7 @@ form .btn{width:100%}
 }
 .modal-card h3{font-size:21px}
 .modal-card p{margin-top:12px;color:var(--muted);font-size:15px;line-height:1.75;font-weight:300}
+.modal-level{margin-top:18px;padding-top:16px;border-top:1px solid var(--line-soft);font-size:12.5px;letter-spacing:.04em;color:var(--faint)}
 .modal-card .btn{margin-top:26px;width:100%}
 
 /* ---------- footer ---------- */
@@ -354,8 +354,8 @@ form .btn{width:100%}
       <h1 class="rise">告別無效增熵，以大道至簡，<br class="nb">一人活成一支軍隊。</h1>
       <p class="hero-sub rise rise-2">不是退而求其次的微型創業，而是一場融合東方哲思、耗散結構物理學與數位槓桿的「系統性自我實現」。</p>
       <div class="hero-cta rise rise-3">
-        <a class="btn btn--fill" href="#apply">預約審核諮詢 NT$ 26,400</a>
-        <a class="btn btn--ghost" href="#apply">取得 8 頁高階主管單兵轉型策略指南</a>
+        <a class="btn btn--fill" href="#apply" data-apply="t1">預約深度對話 NT$ 26,400</a>
+        <a class="btn btn--ghost" href="#apply" data-apply="guide">索取 8 頁策略指南</a>
       </div>
       <p class="hero-note rise rise-3">策略指南免費，以 Email 寄送；諮詢席次採審核制。</p>
       <div class="hero-rule rise rise-4"></div>
@@ -413,14 +413,13 @@ form .btn{width:100%}
           <p class="tier-step">第一階</p>
           <h3>系統破局<br>90 分鐘生命場域深度對話</h3>
           <p class="price"><small>NT$</small>26,400</p>
-          <p class="was">原 NT$ 8,800 × 3 調整</p>
           <ul>
             <li>一對一耗散結構熵增診斷</li>
             <li>認知架構重塑</li>
             <li>會後核心策略錄音</li>
             <li>個人系統路徑圖</li>
           </ul>
-          <div class="tier-foot"><a class="btn btn--ghost" href="#apply">預約深度對話</a></div>
+          <div class="tier-foot"><a class="btn btn--ghost" href="#apply" data-apply="t1">預約深度對話</a></div>
           <p class="cadence">線上進行，會後 7 日內交付路徑圖</p>
         </article>
 
@@ -429,7 +428,6 @@ form .btn{width:100%}
           <p class="tier-step">第二階</p>
           <h3>台灣 雲南山林<br>3 天 2 夜感官定錨小班工坊</h3>
           <p class="price"><small>NT$</small>144,000</p>
-          <p class="was">原 NT$ 48,000 × 3 調整</p>
           <ul>
             <li>私密席次，每班僅限 2 人</li>
             <li>構樹樹皮敲擊工藝</li>
@@ -437,7 +435,7 @@ form .btn{width:100%}
             <li>一對一哲學解構</li>
             <li>食宿場域全包</li>
           </ul>
-          <div class="tier-foot"><a class="btn btn--ghost" href="#apply">申請工坊席次</a></div>
+          <div class="tier-foot"><a class="btn btn--ghost" href="#apply" data-apply="t2">申請工坊席次</a></div>
           <p class="cadence">依季節開班</p>
         </article>
 
@@ -446,7 +444,6 @@ form .btn{width:100%}
           <p class="tier-step">第三階 · 旗艦</p>
           <h3>一人商業閉環<br>3 個月全週期親自陪跑</h3>
           <p class="price"><small>NT$</small>504,000</p>
-          <p class="was">原 NT$ 168,000 × 3 調整</p>
           <ul>
             <li>嚴苛審核制，每季限定 1–2 位</li>
             <li>含台灣 雲南山林體驗</li>
@@ -454,7 +451,7 @@ form .btn{width:100%}
             <li>AI 自動化一人流水線完整部署</li>
             <li>隔週深度覆盤</li>
           </ul>
-          <div class="tier-foot"><a class="btn btn--fill" href="#apply">提交審核申請</a></div>
+          <div class="tier-foot"><a class="btn btn--fill" href="#apply" data-apply="t3">提交審核申請</a></div>
           <p class="cadence">審核通過後排入當季名單</p>
         </article>
       </div>
@@ -514,6 +511,17 @@ form .btn{width:100%}
 
         <form id="vetting-form" novalidate>
           <div class="field">
+            <label for="applicant-level">申請層級</label>
+            <select id="applicant-level" name="level" required>
+              <option value="" selected disabled>請選擇一項</option>
+              <option value="t1">第一階・90 分鐘生命場域深度對話（NT$ 26,400）</option>
+              <option value="t2">第二階・台灣 雲南山林 3 天 2 夜工坊（NT$ 144,000）</option>
+              <option value="t3">第三階・3 個月全週期親自陪跑（NT$ 504,000）</option>
+              <option value="open">尚未決定，想先談過再說</option>
+            </select>
+            <p class="hint">從上方方案點進來會自動帶入，可自行更改。</p>
+          </div>
+          <div class="field">
             <label for="applicant-name">姓名</label>
             <input type="text" id="applicant-name" name="name" autocomplete="name" required placeholder="您的姓名">
           </div>
@@ -567,6 +575,7 @@ form .btn{width:100%}
     <div class="seal" aria-hidden="true">✓</div>
     <h3 id="confirm-title">申請已送出</h3>
     <p>我們將於 48 小時內審核並寄發行前評估問卷。</p>
+    <p class="modal-level" id="confirm-level"></p>
     <button class="btn btn--ghost" type="button" id="confirm-close">關閉</button>
   </div>
 </div>
@@ -604,6 +613,19 @@ form .btn{width:100%}
     });
   });
 
+  var level = document.getElementById('applicant-level');
+  var guide = document.getElementById('guide-optin');
+  Array.prototype.forEach.call(document.querySelectorAll('[data-apply]'), function (link) {
+    link.addEventListener('click', function () {
+      var want = this.dataset.apply;
+      if (want === 'guide') {
+        guide.checked = true;
+        return;
+      }
+      level.value = want;
+    });
+  });
+
   var form = document.getElementById('vetting-form');
   var modal = document.getElementById('confirm-modal');
   var close = document.getElementById('confirm-close');
@@ -613,9 +635,11 @@ form .btn{width:100%}
     modal.hidden = true;
     if (lastFocus) lastFocus.focus();
   }
+  var levelOut = document.getElementById('confirm-level');
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!form.reportValidity()) return;
+    levelOut.textContent = '申請層級：' + level.options[level.selectedIndex].text;
     lastFocus = document.activeElement;
     modal.hidden = false;
     close.focus();
