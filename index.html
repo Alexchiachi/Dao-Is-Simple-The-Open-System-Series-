@@ -422,7 +422,24 @@ form .btn{width:100%}
 .modal-card .btn{margin-top:26px;width:100%}
 
 /* ---------- footer ---------- */
-.foot{border-top:1px solid var(--line-soft);background:var(--alt);padding-block:44px}
+.foot{border-top:1px solid var(--line-soft);background:var(--alt);padding-block:36px 44px}
+.foot-share{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 26px;
+  padding-bottom:26px;margin-bottom:26px;border-bottom:1px solid var(--line-soft);
+}
+.share-label{font-family:var(--ui);font-size:0.78125rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.share-links{display:flex;flex-wrap:wrap;gap:10px 24px;align-items:baseline}
+/* 與購買連結同一個語彙：文字加尖角，顏色只花在可互動之處 */
+.share{
+  font-family:var(--ui);font-size:0.84375rem;font-weight:500;letter-spacing:.02em;
+  color:var(--accent);background:none;border:0;padding:0;cursor:pointer;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.share::after{content:"\203A";font-size:1.05rem;line-height:1;transform:translateY(-1px);transition:transform .2s ease}
+.share:hover::after{transform:translate(3px,-1px)}
+.share:active{opacity:.6}
+.share[data-done]::after{content:"✓";transform:none}
+@media (prefers-reduced-motion:reduce){.share::after{transition:none}}
 .foot-inner{display:flex;flex-wrap:wrap;gap:18px 34px;justify-content:space-between;align-items:center}
 .foot p{font-family:var(--ui);font-size:0.78125rem;color:var(--faint);line-height:1.9}
 .foot nav{display:flex;flex-wrap:wrap;gap:22px}
@@ -706,6 +723,14 @@ form .btn{width:100%}
 </main>
 
 <footer class="foot">
+  <div class="shell foot-share">
+    <p class="share-label">分享這一頁</p>
+    <div class="share-links">
+      <button class="share" type="button" id="share-native" hidden>分享到 App</button>
+      <a class="share" id="share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Falexchiachi.github.io%2FDao-Is-Simple-The-Open-System-Series-%2F" target="_blank" rel="noopener noreferrer">Facebook</a>
+      <button class="share" type="button" id="share-copy">複製連結</button>
+    </div>
+  </div>
   <div class="shell foot-inner">
     <p>Copyright © 2026 大道至簡. All rights reserved.<br>Made for Solopreneurs.</p>
     <nav aria-label="頁尾導覽">
@@ -804,6 +829,71 @@ form .btn{width:100%}
       }
       level.value = want;
     });
+  });
+
+  // 分享：以 canonical 為單一來源，避免網址散落在多處各自過期
+  var canonical = document.querySelector('link[rel="canonical"]');
+  var shareUrl = canonical ? canonical.href : location.origin + location.pathname;
+  var shareTitle = document.title;
+
+  document.getElementById('share-fb').href =
+    'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl);
+
+  // Instagram 沒有網頁分享網址可用。手機的原生分享面板會列出已安裝的
+  // App（IG、LINE、Threads⋯⋯），那是唯一真的能把連結送進 IG 的路徑。
+  var nativeBtn = document.getElementById('share-native');
+  if (navigator.share) {
+    nativeBtn.hidden = false;
+    nativeBtn.addEventListener('click', function () {
+      navigator.share({ title: shareTitle, url: shareUrl }).catch(function () {});
+    });
+  }
+
+  var copyBtn = document.getElementById('share-copy');
+  var copyLabel = copyBtn.textContent;
+  var copyTimer;
+
+  function copied(ok) {
+    copyBtn.textContent = ok ? '已複製' : '請手動複製網址';
+    if (ok) copyBtn.dataset.done = '';
+    window.clearTimeout(copyTimer);
+    copyTimer = window.setTimeout(function () {
+      copyBtn.textContent = copyLabel;
+      delete copyBtn.dataset.done;
+    }, 2200);
+  }
+
+  copyBtn.addEventListener('click', function () {
+    // clipboard 的 promise 可能懸著不結算（例如視窗沒有焦點）。
+    // 按鈕無論如何都要給出回饋，不能靜靜地什麼都不說。
+    var settled = false;
+    function finish(ok) {
+      if (settled) return;
+      settled = true;
+      copied(ok);
+    }
+    window.setTimeout(function () { finish(false); }, 1200);
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(shareUrl).then(function () { finish(true); },
+                                                   function () { finish(false); });
+      return;
+    }
+    // 非安全連線或舊瀏覽器沒有 clipboard API
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = shareUrl;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'absolute';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      finish(ok);
+    } catch (e) {
+      finish(false);
+    }
   });
 
   var form = document.getElementById('vetting-form');
