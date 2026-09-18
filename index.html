@@ -727,6 +727,7 @@ form .btn{width:100%}
     <p class="share-label">分享這一頁</p>
     <div class="share-links">
       <button class="share" type="button" id="share-native" hidden>分享到 App</button>
+      <a class="share" id="share-line" href="https://social-plugins.line.me/lineit/share?url=https%3A%2F%2Falexchiachi.github.io%2FDao-Is-Simple-The-Open-System-Series-%2F" target="_blank" rel="noopener noreferrer">LINE</a>
       <a class="share" id="share-fb" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Falexchiachi.github.io%2FDao-Is-Simple-The-Open-System-Series-%2F" target="_blank" rel="noopener noreferrer">Facebook</a>
       <button class="share" type="button" id="share-copy">複製連結</button>
     </div>
@@ -836,8 +837,11 @@ form .btn{width:100%}
   var shareUrl = canonical ? canonical.href : location.origin + location.pathname;
   var shareTitle = document.title;
 
-  document.getElementById('share-fb').href =
-    'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl);
+  [['share-line', 'https://social-plugins.line.me/lineit/share?url='],
+   ['share-fb', 'https://www.facebook.com/sharer/sharer.php?u=']
+  ].forEach(function (pair) {
+    document.getElementById(pair[0]).href = pair[1] + encodeURIComponent(shareUrl);
+  });
 
   // Instagram 沒有網頁分享網址可用。手機的原生分享面板會列出已安裝的
   // App（IG、LINE、Threads⋯⋯），那是唯一真的能把連結送進 IG 的路徑。

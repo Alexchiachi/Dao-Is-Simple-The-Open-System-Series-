@@ -56,6 +56,7 @@ The Open System Series / Negentropy Project
 6. **審核申請表單** — 申請層級、姓名、Email、目前職位與年收級距、目前最大的系統性瓶頸，以及索取策略指南的勾選。上方任一方案的按鈕都會自動帶入對應層級。送出後跳出確認視窗：「申請已送出，我們將於 48 小時內審核並寄發行前評估問卷」，並回報所申請的層級。
 7. **頁尾** — 分享列與版權。分享列有三個去處：
    - **分享到 App** — 呼叫系統原生分享面板，會列出使用者已安裝的 App（Instagram、LINE、Threads⋯⋯）。只在支援 `navigator.share` 的裝置顯示，其餘自動隱藏
+   - **LINE** — `social-plugins.line.me/lineit/share`。排在 Facebook 之前，因為台灣的分享使用率較高
    - **Facebook** — `sharer.php`，桌機與手機皆可
    - **複製連結** — 貼進 IG 個人簡介或限時動態用
 
