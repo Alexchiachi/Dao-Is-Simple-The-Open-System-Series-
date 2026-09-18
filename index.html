@@ -333,15 +333,24 @@ p{margin:0}
 .asset h3{font-size:1.25rem;line-height:1.45}
 .asset p{margin-top:14px;color:var(--muted);font-size:0.96875rem;line-height:1.9;font-weight:400}
 .asset .meta{font-family:var(--ui);margin-top:16px}
-/* 購買連結是這一區唯一可互動的東西，所以它拿走這一區唯一的顏色 */
-.buy{
-  display:inline-flex;align-items:center;gap:5px;margin-top:18px;
-  font-family:var(--ui);font-size:0.9375rem;font-weight:500;color:var(--accent);
+/* 外連文字連結的共通語彙：文字加尖角。顏色只花在可互動之處，
+   所以購買、分享、聯絡三者共用同一套，只有尺寸各自不同。 */
+.buy,.share,.contact{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:var(--ui);font-weight:500;color:var(--accent);
 }
-.buy::after{content:"\203A";font-size:1.15rem;line-height:1;transform:translateY(-1px);transition:transform .2s ease}
-.buy:hover::after{transform:translate(4px,-1px)}
-.buy:active{opacity:.6}
-@media (prefers-reduced-motion:reduce){.buy::after{transition:none}}
+.buy::after,.share::after,.contact::after{
+  content:"\203A";line-height:1;transform:translateY(-1px);transition:transform .2s ease;
+}
+.buy:hover::after,.share:hover::after,.contact:hover::after{transform:translate(3px,-1px)}
+.buy:active,.share:active,.contact:active{opacity:.6}
+@media (prefers-reduced-motion:reduce){
+  .buy::after,.share::after,.contact::after{transition:none}
+}
+.buy{margin-top:18px;font-size:0.9375rem}
+.buy::after{font-size:1.15rem}
+.contact{font-size:0.96875rem}
+.contact::after{font-size:1.15rem}
 .meta{font-size:0.78125rem;letter-spacing:.06em;color:var(--faint)}
 /* 三欄並列時，購買連結在每張卡上都落在同一個位置 */
 @media (min-width:901px){
@@ -429,17 +438,9 @@ form .btn{width:100%}
 }
 .share-label{font-family:var(--ui);font-size:0.78125rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .share-links{display:flex;flex-wrap:wrap;gap:10px 24px;align-items:baseline}
-/* 與購買連結同一個語彙：文字加尖角，顏色只花在可互動之處 */
-.share{
-  font-family:var(--ui);font-size:0.84375rem;font-weight:500;letter-spacing:.02em;
-  color:var(--accent);background:none;border:0;padding:0;cursor:pointer;
-  display:inline-flex;align-items:center;gap:4px;
-}
-.share::after{content:"\203A";font-size:1.05rem;line-height:1;transform:translateY(-1px);transition:transform .2s ease}
-.share:hover::after{transform:translate(3px,-1px)}
-.share:active{opacity:.6}
+.share{font-size:0.84375rem;letter-spacing:.02em;background:none;border:0;padding:0;cursor:pointer;gap:4px}
+.share::after{font-size:1.05rem}
 .share[data-done]::after{content:"✓";transform:none}
-@media (prefers-reduced-motion:reduce){.share::after{transition:none}}
 .foot-inner{display:flex;flex-wrap:wrap;gap:18px 34px;justify-content:space-between;align-items:center}
 .foot p{font-family:var(--ui);font-size:0.78125rem;color:var(--faint);line-height:1.9}
 .foot nav{display:flex;flex-wrap:wrap;gap:22px}
@@ -665,6 +666,8 @@ form .btn{width:100%}
             <dd>寄發行前評估問卷，再安排時段</dd>
             <dt>資料原則</dt>
             <dd>僅用於本次審核，不對外揭露</dd>
+            <dt>先問一句</dt>
+            <dd><a class="contact" href="https://www.facebook.com/dream2walker" target="_blank" rel="noopener noreferrer">Facebook 私訊</a></dd>
           </dl>
         </div>
 
