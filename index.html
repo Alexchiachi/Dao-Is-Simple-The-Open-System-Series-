@@ -38,8 +38,8 @@
   --surface:#FFFFFF;
   --alt:#F2F0EC;
   --ink:#1C1F22;
-  --muted:#6E6A66;
-  --faint:#96918B;
+  --muted:#5B5854;
+  --faint:#726D67;
   --line:rgba(28,31,34,.13);
   --line-soft:rgba(28,31,34,.07);
   --accent:#8D5B4C;
@@ -64,8 +64,8 @@
     --surface:#161617;
     --alt:#1B1B1D;
     --ink:#F3F1EC;
-    --muted:#A49E96;
-    --faint:#7C766F;
+    --muted:#BBB6B0;
+    --faint:#88827A;
     --line:rgba(243,241,236,.16);
     --line-soft:rgba(243,241,236,.08);
     --accent:#CE8E79;
@@ -85,8 +85,8 @@
   --surface:#161617;
   --alt:#1B1B1D;
   --ink:#F3F1EC;
-  --muted:#A49E96;
-  --faint:#7C766F;
+  --muted:#BBB6B0;
+  --faint:#88827A;
   --line:rgba(243,241,236,.16);
   --line-soft:rgba(243,241,236,.08);
   --accent:#CE8E79;
@@ -265,19 +265,6 @@ p{margin:0}
 }
 
 /* ---------- tiers ---------- */
-.segmented{
-  display:none;margin:36px auto 0;max-width:520px;padding:3px;gap:3px;
-  background:var(--line-soft);border-radius:12px;
-}
-.segmented button{
-  flex:1;font-family:var(--ui);font-size:0.8125rem;font-weight:500;color:var(--ink);
-  background:transparent;border:0;border-radius:9px;padding:9px 6px;cursor:pointer;
-  transition:background-color .2s ease,transform 100ms ease-out;
-}
-.segmented button:active{transform:scale(.96)}
-.segmented button[aria-pressed="true"]{background:var(--surface)}
-@media (max-width:860px){.segmented{display:flex}}
-
 .tiers{margin-top:clamp(36px,5vw,56px);display:grid;gap:18px;grid-template-columns:repeat(3,1fr)}
 .tier{
   position:relative;border:1px solid var(--line-soft);border-radius:var(--radius);
@@ -303,10 +290,12 @@ p{margin:0}
 .tier li::before{content:"";height:1px;margin-top:14px;background:var(--line)}
 .tier .tier-foot{margin-top:28px;padding-top:0}
 .tier .tier-foot .btn{width:100%}
-.tier .cadence{font-family:var(--ui);margin-top:14px;font-size:0.78125rem;color:var(--faint);text-align:center}
+.tier .cadence{font-family:var(--ui);margin-top:14px;font-size:0.875rem;color:var(--muted);text-align:center;line-height:1.6}
+/* 三個價格是這一頁的核心比較。原本在窄螢幕用分段控制器一次只顯示一張，
+   等於在主要裝置上藏起決策所需的資訊——改為全部並列，垂直捲動即可讀完。 */
 @media (max-width:860px){
-  .tiers{grid-template-columns:1fr}
-  .tier:not(.is-active){display:none}
+  .tiers{grid-template-columns:1fr;gap:22px}
+  .tier{padding:28px 24px 26px}
 }
 
 /* ---------- assets ---------- */
@@ -351,7 +340,7 @@ p{margin:0}
 .buy::after{font-size:1.15rem}
 .contact{font-size:0.96875rem}
 .contact::after{font-size:1.15rem}
-.meta{font-size:0.78125rem;letter-spacing:.06em;color:var(--faint)}
+.meta{font-size:0.8125rem;letter-spacing:.06em;color:var(--faint)}
 /* 三欄並列時，購買連結在每張卡上都落在同一個位置 */
 @media (min-width:901px){
   .asset{grid-template-rows:auto 1fr;align-items:stretch}
@@ -388,7 +377,7 @@ input:focus,select:focus,textarea:focus{outline:0;border-color:var(--accent);box
 /* :user-invalid 只在使用者動過該欄位之後才成立——載入時不會先指責對方 */
 input:user-invalid,select:user-invalid,textarea:user-invalid{border-color:var(--danger)}
 input:user-invalid:focus,select:user-invalid:focus,textarea:user-invalid:focus{box-shadow:0 0 0 4px rgba(168,65,47,.14)}
-.hint{font-family:var(--ui);font-size:0.78125rem;color:var(--faint);line-height:1.7}
+.hint{font-family:var(--ui);font-size:0.875rem;color:var(--muted);line-height:1.7}
 .optin{display:flex;gap:11px;align-items:flex-start;font-size:0.96875rem;line-height:1.7;color:var(--muted);font-weight:400}
 .optin input{width:18px;height:18px;flex:none;margin-top:3px;accent-color:var(--accent);padding:0}
 form .btn{width:100%}
@@ -399,7 +388,7 @@ form .btn{width:100%}
 }
 .btn:disabled{opacity:.6;cursor:progress}
 .btn:disabled:active{transform:none}
-.legal{font-family:var(--ui);font-size:0.78125rem;color:var(--faint);text-align:center;line-height:1.7}
+.legal{font-family:var(--ui);font-size:0.875rem;color:var(--muted);text-align:center;line-height:1.7}
 @media (max-width:860px){.apply-grid{grid-template-columns:1fr}}
 
 /* ---------- modal ---------- */
@@ -427,7 +416,7 @@ form .btn{width:100%}
 }
 .modal-card h3{font-size:1.3125rem}
 .modal-card p{margin-top:12px;color:var(--muted);font-size:0.9375rem;line-height:1.9;font-weight:400}
-.modal-level{font-family:var(--ui);margin-top:18px;padding-top:16px;border-top:1px solid var(--line-soft);font-size:0.78125rem;letter-spacing:.04em;color:var(--faint)}
+.modal-level{font-family:var(--ui);margin-top:18px;padding-top:16px;border-top:1px solid var(--line-soft);font-size:0.8125rem;letter-spacing:.04em;color:var(--faint)}
 .modal-card .btn{margin-top:26px;width:100%}
 
 /* ---------- footer ---------- */
@@ -442,9 +431,15 @@ form .btn{width:100%}
 .share::after{font-size:1.05rem}
 .share[data-done]::after{content:"✓";transform:none}
 .foot-inner{display:flex;flex-wrap:wrap;gap:18px 34px;justify-content:space-between;align-items:center}
-.foot p{font-family:var(--ui);font-size:0.78125rem;color:var(--faint);line-height:1.9}
-.foot nav{display:flex;flex-wrap:wrap;gap:22px}
+.foot p{font-family:var(--ui);font-size:0.8125rem;color:var(--faint);line-height:1.9}
+.foot nav{display:flex;flex-wrap:wrap;gap:4px 22px}
 .foot nav a{font-family:var(--ui);font-size:0.78125rem;color:var(--muted)}
+/* 手指的精準度不如指標裝置，頁尾的連結與分享鈕在觸控時要有可按的高度 */
+@media (hover:none){
+  .foot nav a,.share{padding-block:12px}
+  .foot nav{gap:0 22px}
+  .share-links{gap:0 24px}
+}
 </style>
 </head>
 <body>
@@ -541,12 +536,6 @@ form .btn{width:100%}
         <li>服務對象 38-55 歲創辦人與高階主管</li>
       </ul>
 
-      <div class="segmented" id="tier-switch" role="group" aria-label="選擇方案層級">
-        <button type="button" data-tier="t1" aria-pressed="false">深度對話</button>
-        <button type="button" data-tier="t2" aria-pressed="false">山林工坊</button>
-        <button type="button" data-tier="t3" aria-pressed="true">全週期陪跑</button>
-      </div>
-
       <div class="tiers" id="tiers">
         <article class="tier" id="t1">
           <span class="badge badge--slot" aria-hidden="true">席次開放中</span>
@@ -579,7 +568,7 @@ form .btn{width:100%}
           <p class="cadence">依需求開班，2 人起</p>
         </article>
 
-        <article class="tier tier--flagship is-active" id="t3">
+        <article class="tier tier--flagship" id="t3">
           <span class="badge">每季限額 2 席｜審核制</span>
           <p class="tier-step">第三階 · 旗艦</p>
           <h3>一人商業閉環<br>3 個月全週期親自陪跑</h3>
@@ -808,19 +797,6 @@ form .btn{width:100%}
   // 判定帶會被壓成零高度，指路就會無聲失效
   }, { rootMargin: '-15% 0px -70% 0px' });
   sections.forEach(function (s) { if (s) spy.observe(s); });
-
-  var seg = document.getElementById('tier-switch');
-  var tiers = document.getElementById('tiers');
-  seg.addEventListener('click', function (e) {
-    var btn = e.target.closest('button[data-tier]');
-    if (!btn) return;
-    Array.prototype.forEach.call(seg.querySelectorAll('button'), function (b) {
-      b.setAttribute('aria-pressed', String(b === btn));
-    });
-    Array.prototype.forEach.call(tiers.querySelectorAll('.tier'), function (card) {
-      card.classList.toggle('is-active', card.id === btn.dataset.tier);
-    });
-  });
 
   var level = document.getElementById('applicant-level');
   var guide = document.getElementById('guide-optin');
