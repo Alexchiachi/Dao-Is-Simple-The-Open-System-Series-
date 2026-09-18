@@ -11,6 +11,8 @@ The Open System Series / Negentropy Project
 | 檔案 | 內容 |
 | --- | --- |
 | `index.html` | 完整網站。CSS 與 JavaScript 全部內嵌，唯一的外部請求是 Google Fonts |
+| `images/` | 書封、網站圖示、分享預覽卡 |
+| `favicon.ico` | 16／32／48px 三種尺寸合一 |
 | `docs/design-philosophy.md` | 靜構 / Still Scaffold — 這一頁視覺語言所依據的設計哲學 |
 | `docs/brief.md` | 最初的生成指令（歷史文件，內容已不等於現況） |
 
@@ -85,6 +87,16 @@ HTML5 + 手寫 CSS + 原生 JavaScript。沒有 Tailwind、沒有框架、沒有
 JavaScript 只做四件事：手機選單開合、方案分段控制器、導航材質與當前章節、表單送出後的確認視窗。所有連結都是真實錨點，JavaScript 未執行時頁面仍可完整使用。
 
 互動細節依循 Apple 的流體介面原則：按壓回饋在 100ms 內發生，確認視窗沿進場的路徑退場，表單以 `:user-invalid` 在使用者離開欄位後才提示。
+
+## 圖示與分享預覽
+
+`images/apple-touch-icon.png`（180px，「道」字）是所有圖示的來源，向下縮出
+16／32px 與 `favicon.ico`。**沒有 192 與 512px**：來源只有 180px，放大會模糊；
+要補齊 PWA 圖示組需要一張 512px 的原稿。
+
+分享預覽卡 `images/og-card.png`（1200×630）用網站自己的字體與色票排版。
+`og:image` 與 `og:url` 必須是絕對網址，**改用自訂網域時這兩行要一起改**，
+否則預覽會指向舊網址。
 
 ## 部署
 
