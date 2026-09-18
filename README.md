@@ -45,7 +45,7 @@ The Open System Series / Negentropy Project
 2. **Hero** — 標題「告別無效增熵，以大道至簡，一人活成一支軍隊。」兩個行動點：預約深度對話 NT$ 26,400、索取 8 頁策略指南。
 3. **核心哲學** — 三支柱，以髮絲線分欄，無卡片。
 4. **服務矩陣** — 三階方案卡。860px 以下改用分段控制器切換。
-5. **數位資產** — 三個項目，書封皆以純 CSS 繪製（無圖檔）：
+5. **數位資產** — 三個項目。已上市的書用真實封面圖（`images/`，WebP 並附 JPEG 備援），尚無封面的以純 CSS 繪製：
    - 《The Architecture of Inner Flow》— 英文電子書，[Amazon](https://www.amazon.com/dp/B0H3VZ1JH2)
    - 《我們不要就這樣算了，但也不要一直記得》— 幸福三部曲第 1 冊，副題〈為道日損〉，簡家旗著，[Kobo](https://www.kobo.com/hk/zh/ebook/qdamXwfCTjWLK_PnrEUfew)
    - 開放系統三部曲 — 研發中，無購買連結
