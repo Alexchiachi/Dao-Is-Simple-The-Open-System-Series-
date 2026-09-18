@@ -264,6 +264,29 @@ p{margin:0}
   .pillar-mark{flex-direction:row;align-items:baseline;gap:16px}
 }
 
+/* ---------- about ---------- */
+/* 與相鄰兩區不同的版面家族：核心哲學是通欄橫列、服務矩陣是卡片格，
+   這裡是左身分欄、右編年敘事的不對稱兩欄。 */
+.about{display:grid;grid-template-columns:minmax(180px,22%) 1fr;gap:clamp(28px,5vw,64px);align-items:start}
+.about-name{font-family:var(--serif);font-size:clamp(1.5rem,2.4vw,1.875rem);font-weight:700;letter-spacing:.04em}
+.about-role{font-family:var(--ui);margin-top:10px;font-size:0.78125rem;letter-spacing:.14em;color:var(--faint)}
+.about-lede{margin-top:22px;max-width:62ch;color:var(--muted);font-size:1.0625rem;line-height:1.95}
+/* 三段是真實的時序，所以它們是一個有序清單；標籤用實際的內容，不用 01／02／03 */
+.arc{list-style:none;margin:clamp(34px,4vw,48px) 0 0;padding:0;display:grid}
+.arc li{border-top:1px solid var(--line);padding:24px 0 26px}
+.arc li:last-child{border-bottom:1px solid var(--line)}
+.arc-label{font-size:1.0625rem;font-weight:600;color:var(--ink)}
+.arc p + p{margin-top:12px;max-width:62ch;color:var(--muted);font-size:0.96875rem;line-height:1.95}
+.about-close{
+  margin-top:clamp(30px,4vw,42px);max-width:44ch;
+  font-size:1.0625rem;line-height:1.95;color:var(--ink);
+}
+@media (max-width:760px){
+  .about{grid-template-columns:1fr;gap:22px}
+  .about-id{display:flex;align-items:baseline;gap:14px}
+  .about-role{margin-top:0}
+}
+
 /* ---------- tiers ---------- */
 .tiers{margin-top:clamp(36px,5vw,56px);display:grid;gap:18px;grid-template-columns:repeat(3,1fr)}
 .tier{
@@ -435,7 +458,7 @@ form .btn{width:100%}
 .modal-card .btn{margin-top:26px;width:100%}
 
 /* ---------- footer ---------- */
-.foot{border-top:1px solid var(--line-soft);background:var(--alt);padding-block:36px 44px}
+.foot{border-top:1px solid var(--line-soft);background:var(--ground);padding-block:36px 44px}
 .foot-share{
   display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 26px;
   padding-bottom:26px;margin-bottom:26px;border-bottom:1px solid var(--line-soft);
@@ -468,6 +491,7 @@ form .btn{width:100%}
     </a>
     <nav class="nav-links" aria-label="主要導覽">
       <a href="#philosophy">核心哲學</a>
+      <a href="#about">同行者</a>
       <a href="#offerings">服務矩陣</a>
       <a href="#assets">數位資產</a>
       <a href="#apply">審核申請</a>
@@ -481,6 +505,7 @@ form .btn{width:100%}
   <div class="nav-panel" id="nav-panel" hidden>
     <ul>
       <li><a href="#philosophy">核心哲學</a></li>
+      <li><a href="#about">同行者</a></li>
       <li><a href="#offerings">服務矩陣</a></li>
       <li><a href="#assets">數位資產</a></li>
       <li><a href="#apply">審核申請</a></li>
@@ -541,7 +566,35 @@ form .btn{width:100%}
     </div>
   </section>
 
-  <section class="section" id="offerings">
+  <section class="section" id="about">
+    <div class="shell about">
+      <div class="about-id">
+        <p class="about-name">簡家旗</p>
+        <p class="about-role">生命場域導引師</p>
+      </div>
+      <div class="about-body">
+        <h2 class="section-title">關於這裡的同行者</h2>
+        <p class="about-lede">水滿則溢，月盈則虧。困在封閉的系統裡，越是發力，能量逸散得越快。這不是書齋裡的推演，而是一場用生命歷程寫下的系統重構。</p>
+        <ol class="arc">
+          <li>
+            <p class="arc-label">金融體系的精密規律</p>
+            <p>早年在高強度的金融資本體系中浸潤，深刻體察了商業運轉的本質與資本的冷峻邏輯，但也親眼見證了體制如何將人的靈性與時間切割為度量衡，將個體壓榨成封閉系統裡的齒輪。</p>
+          </li>
+          <li>
+            <p class="arc-label">社會企業的土地實踐</p>
+            <p>為了尋找另一種生命與土地的連結，他曾走出冷氣房，長年扎根鄉野大地，創辦並營運帶動地方與農業的社會企業。在日光、泥土與人群的交織中，他看見了真實的人心溫度，卻也深深體認到組織擴張、固定成本與人事管理所帶來的沉重摩擦。</p>
+          </li>
+          <li>
+            <p class="arc-label">一人公司的返璞歸真</p>
+            <p>看透了資本體制的冰冷，也經歷了組織經營的重負，他明白：真正的自由，既不是留在體制內委曲求全，也不是用浪漫的熱血對抗現實，而是一場順應自然律則的「系統性自我實現」。於是回歸本質，融匯老莊的「為道日損」與物理學的「耗散結構」，創立大道至簡，將自己打造成一座自足、自轉、持續產生負熵的開放系統。</p>
+          </li>
+        </ol>
+        <p class="about-close">道不遠人。當生命不再執著於向外抓取，天地自會寬廣，一人自成森羅萬象。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="offerings">
     <div class="shell">
       <h2 class="section-title">三個層級，一條完整路徑。</h2>
       <p class="section-lede">從一次深度診斷，到山林中的感官定錨，再到三個月的全週期陪跑。每一階都可獨立運作，也可依序推進。</p>
@@ -602,7 +655,7 @@ form .btn{width:100%}
     </div>
   </section>
 
-  <section class="section section--alt" id="assets">
+  <section class="section" id="assets">
     <div class="shell">
       <p class="eyebrow">數位資產</p>
       <h2 class="section-title">長尾生態：讓文字先於你抵達。</h2>
@@ -657,7 +710,7 @@ form .btn{width:100%}
     </div>
   </section>
 
-  <section class="section" id="apply">
+  <section class="section section--alt" id="apply">
     <div class="shell">
       <h2 class="section-title">先確認彼此合適，再談合作。</h2>
       <div class="apply-grid">
@@ -754,6 +807,7 @@ form .btn{width:100%}
     <p>Copyright © 2026 大道至簡. All rights reserved.<br>Made for Solopreneurs.</p>
     <nav aria-label="頁尾導覽">
       <a href="#philosophy">核心哲學</a>
+      <a href="#about">同行者</a>
       <a href="#offerings">服務矩陣</a>
       <a href="#assets">數位資產</a>
       <a href="#apply">審核申請</a>
