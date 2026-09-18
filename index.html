@@ -268,6 +268,14 @@ p{margin:0}
 /* 與相鄰兩區不同的版面家族：核心哲學是通欄橫列、服務矩陣是卡片格，
    這裡是左身分欄、右編年敘事的不對稱兩欄。 */
 .about{display:grid;grid-template-columns:minmax(180px,22%) 1fr;gap:clamp(28px,5vw,64px);align-items:start}
+/* 肖像沿用檔案本身的 1060×1484，不裁進我先挑好的框；
+   aspect-ratio 讓瀏覽器在圖片載入前就留好位置，不會讓姓名跳動。 */
+.portrait{display:block;margin:0}
+.portrait img{
+  display:block;width:100%;height:auto;aspect-ratio:1060 / 1484;
+  object-fit:cover;border-radius:8px;background:var(--alt);
+}
+.about-id-text{margin-top:18px}
 .about-name{font-family:var(--serif);font-size:clamp(1.5rem,2.4vw,1.875rem);font-weight:700;letter-spacing:.04em}
 .about-role{font-family:var(--ui);margin-top:10px;font-size:0.78125rem;letter-spacing:.14em;color:var(--faint)}
 .about-lede{margin-top:22px;max-width:62ch;color:var(--muted);font-size:1.0625rem;line-height:1.95}
@@ -283,7 +291,10 @@ p{margin:0}
 }
 @media (max-width:760px){
   .about{grid-template-columns:1fr;gap:22px}
-  .about-id{display:flex;align-items:baseline;gap:14px}
+  /* 窄螢幕上整欄寬的肖像會把敘事推到第二屏，所以縮成署名旁的一枚頭像 */
+  .about-id{display:flex;align-items:center;gap:16px}
+  .portrait{flex:none;width:76px}
+  .about-id-text{margin-top:0;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
   .about-role{margin-top:0}
 }
 
@@ -570,8 +581,16 @@ form .btn{width:100%}
   <section class="section" id="about">
     <div class="shell about">
       <div class="about-id">
-        <p class="about-name">簡家旗</p>
-        <p class="about-role">生命場域導引師</p>
+        <picture class="portrait">
+          <source type="image/webp" srcset="images/founder-jianchiachi.webp">
+          <img src="images/founder-jianchiachi.jpg" width="480" height="672"
+               loading="lazy" decoding="async"
+               alt="簡家旗的肖像：灰白短髮與短鬚，深色西裝外套，身後是深綠色的背景。">
+        </picture>
+        <div class="about-id-text">
+          <p class="about-name">簡家旗</p>
+          <p class="about-role">生命場域導引師</p>
+        </div>
       </div>
       <div class="about-body">
         <h2 class="section-title">關於這裡的同行者</h2>
