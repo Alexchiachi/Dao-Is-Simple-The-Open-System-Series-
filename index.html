@@ -389,6 +389,21 @@ form .btn{width:100%}
 .btn:disabled{opacity:.6;cursor:progress}
 .btn:disabled:active{transform:none}
 .legal{font-family:var(--ui);font-size:0.875rem;color:var(--muted);text-align:center;line-height:1.7}
+/* 同意的細節就放在同意發生的地方，預設收起，需要的人打得開 */
+.privacy{font-family:var(--ui);font-size:0.875rem;color:var(--muted);line-height:1.8}
+.privacy summary{
+  cursor:pointer;color:var(--accent);font-weight:500;text-align:center;
+  list-style:none;padding-block:6px;
+}
+.privacy summary::-webkit-details-marker{display:none}
+.privacy summary::after{
+  content:"\203A";display:inline-block;margin-left:6px;
+  transform:rotate(90deg);transition:transform .2s ease;
+}
+.privacy[open] summary::after{transform:rotate(-90deg)}
+.privacy ul{margin:14px 0 0;padding-left:1.2em;display:grid;gap:10px}
+.privacy strong{color:var(--ink);font-weight:500}
+@media (prefers-reduced-motion:reduce){.privacy summary::after{transition:none}}
 @media (max-width:860px){.apply-grid{grid-template-columns:1fr}}
 
 /* ---------- modal ---------- */
@@ -681,9 +696,14 @@ form .btn{width:100%}
             <input type="email" id="applicant-email" name="email" autocomplete="email" required placeholder="name@example.com">
           </div>
           <div class="field">
-            <label for="applicant-tier">目前職位與年收級距</label>
-            <select id="applicant-tier" name="tier" required>
-              <option value="" selected disabled>請選擇一項</option>
+            <label for="applicant-bottleneck">目前最大的系統性瓶頸</label>
+            <textarea id="applicant-bottleneck" name="bottleneck" required placeholder="例如：營收仰賴我個人時間、團隊擴編後決策品質下降、長期處於高耗能低產出的狀態⋯⋯"></textarea>
+            <p class="hint">越具體，審核與行前問卷越能對準你的實際處境。</p>
+          </div>
+          <div class="field">
+            <label for="applicant-tier">目前職位與年收級距（選填）</label>
+            <select id="applicant-tier" name="tier">
+              <option value="不便透露" selected>不便透露</option>
               <option>創辦人 / 負責人・年收 300 萬以下</option>
               <option>創辦人 / 負責人・年收 300-1,000 萬</option>
               <option>創辦人 / 負責人・年收 1,000 萬以上</option>
@@ -691,11 +711,7 @@ form .btn{width:100%}
               <option>C-Level 高階主管・年薪 600 萬以上</option>
               <option>高淨值創作者 / 專業工作者</option>
             </select>
-          </div>
-          <div class="field">
-            <label for="applicant-bottleneck">目前最大的系統性瓶頸</label>
-            <textarea id="applicant-bottleneck" name="bottleneck" required placeholder="例如：營收仰賴我個人時間、團隊擴編後決策品質下降、長期處於高耗能低產出的狀態⋯⋯"></textarea>
-            <p class="hint">越具體，審核與行前問卷越能對準你的實際處境。</p>
+            <p class="hint">用來判斷投入的規模是否與你現在的處境相稱。不填不影響審核。</p>
           </div>
           <div class="honeypot" aria-hidden="true">
             <label for="company-website">請留空</label>
@@ -708,6 +724,16 @@ form .btn{width:100%}
           <p class="form-error" id="form-error" role="alert" hidden></p>
           <button class="btn btn--fill" type="submit" id="submit-btn">送出審核申請</button>
           <p class="legal">送出即表示同意我們為本次審核與行前評估使用上述資料。</p>
+          <details class="privacy">
+            <summary>我們如何處理你送出的資料</summary>
+            <ul>
+              <li>內容寫入一份 Google 試算表，位於本站經營者本人的 Google 帳號，並寄一封通知信到同一人的信箱。<strong>沒有經過任何第三方表單服務。</strong></li>
+              <li>用途僅限本次審核與行前評估。不併入行銷名單、不轉售、不對外揭露。</li>
+              <li>本頁沒有安裝分析或追蹤工具，也不寫入 cookie。</li>
+              <li>字體由 Google Fonts 提供，因此瀏覽本頁時 Google 會取得你的 IP 位址。這是本頁唯一的外部請求。</li>
+              <li>要查詢、更正或刪除你送出的資料，透過上方的 Facebook 私訊告知即可。</li>
+            </ul>
+          </details>
         </form>
       </div>
     </div>
