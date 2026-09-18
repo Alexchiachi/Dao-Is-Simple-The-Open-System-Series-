@@ -56,6 +56,12 @@
   --serif:"Noto Serif TC","Songti TC","Songti SC","Source Han Serif TC",STSong,SimSun,Georgia,serif;
   --ui:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang TC","Noto Sans TC","Helvetica Neue",Arial,sans-serif;
   --shell:1040px;
+  /* 字級：三十八到五十五歲的眼睛是這一頁的規格。內文與導言用 clamp 隨視窗升降，
+     因為手機貼著臉看、桌機隔著一臂之遙，同一個 px 值在兩者上的可讀性並不相同。 */
+  --t-micro:0.84375rem;   /* 13.5px 標籤層：寬字距，只承載分類，不承載句子 */
+  --t-small:0.9375rem;    /* 15px 註腳層：提示、法律與說明文字 */
+  --t-body:clamp(1.0625rem,1.0125rem + 0.16vw,1.125rem);  /* 17→18px 主要內文 */
+  --t-lede:clamp(1.1875rem,1.125rem + 0.2vw,1.25rem);     /* 19→20px 導言 */
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
@@ -130,7 +136,7 @@ body{
   background:var(--ground);
   color:var(--ink);
   font-family:var(--serif);
-  font-size:1.0625rem;
+  font-size:var(--t-body);
   line-height:1.85;
   font-weight:400;
   letter-spacing:.015em;
@@ -152,11 +158,17 @@ h1,h2,h3,h4{margin:0;text-wrap:balance;letter-spacing:0;font-weight:600;line-hei
 p{margin:0}
 .eyebrow{
   font-family:var(--ui);
-  font-size:0.78125rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+  font-size:var(--t-micro);font-weight:500;letter-spacing:.16em;text-transform:uppercase;
   color:var(--faint);margin:0 0 20px;
 }
-.section-title{font-size:clamp(1.75rem,4.2vw,2.75rem);font-weight:700;letter-spacing:-.012em;line-height:1.3}
-.section-lede{margin-top:22px;max-width:64ch;color:var(--muted);font-size:1.0625rem;line-height:1.95;font-weight:400}
+/* 最小級數維持 28px：再大一點，手機上十二字的標題就要斷行，
+   而中文沒有詞距，斷點會落在詞的中間。上限放大到 46px，
+   讓桌機的標題仍明顯領先 18px 的內文。 */
+.section-title{font-size:clamp(1.75rem,4.2vw,2.875rem);font-weight:700;letter-spacing:-.012em;line-height:1.3}
+/* 中文沒有詞距。標題在手機上折成兩行時，瀏覽器會斷在詞的中間——「文／字」、
+   「合／適」。把需要折行的標題切成語意片段，斷行只能發生在片段之間。 */
+.ph{display:inline-block}
+.section-lede{margin-top:22px;max-width:64ch;color:var(--muted);font-size:var(--t-lede);line-height:1.9;font-weight:400}
 
 /* 頁面頂端的哨兵：它離開視窗，就代表有內容捲到導航下方了 */
 .top-sentinel{position:absolute;top:0;left:0;width:1px;height:4px;pointer-events:none}
@@ -181,10 +193,10 @@ p{margin:0}
   min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px;
 }
 .brand{display:flex;align-items:baseline;gap:10px;color:var(--ink)}
-.brand b{font-family:var(--serif);font-size:1.1875rem;font-weight:600;letter-spacing:.06em}
-.brand span{font-size:0.78125rem;color:var(--faint);letter-spacing:.08em}
+.brand b{font-family:var(--serif);font-size:1.25rem;font-weight:600;letter-spacing:.06em;white-space:nowrap}
+.brand span{font-size:var(--t-micro);color:var(--faint);letter-spacing:.08em}
 .nav-links{display:flex;gap:30px;align-items:center}
-.nav-links a{font-family:var(--ui);font-size:0.8125rem;color:var(--ink);opacity:.82;transition:opacity .15s ease}
+.nav-links a{font-family:var(--ui);font-size:0.875rem;color:var(--ink);opacity:.82;transition:opacity .15s ease}
 .nav-links a:active{opacity:.5}
 .nav-links a:hover{opacity:1}
 .nav-links a[aria-current]{opacity:1;color:var(--ink)}
@@ -198,17 +210,19 @@ p{margin:0}
 .nav-panel{border-top:1px solid var(--line-soft);background:var(--nav-bg)}
 .nav-panel ul{list-style:none;margin:0;padding:8px 22px 20px;display:grid;gap:2px}
 .nav-panel a:active{opacity:.55}
-.nav-panel a{display:block;font-family:var(--ui);padding:13px 0;font-size:1.1875rem;font-weight:500;color:var(--ink);border-bottom:1px solid var(--line-soft)}
+.nav-panel a{display:block;font-family:var(--ui);padding:14px 0;font-size:1.25rem;font-weight:500;color:var(--ink);border-bottom:1px solid var(--line-soft)}
 @media (max-width:820px){
   .nav-links{display:none}
   .nav-toggle{display:block}
 }
+/* 約 360px 以下，站名加副標加選單鈕就超出一行。副標先退場，站名不折行。 */
+@media (max-width:380px){.brand span{display:none}}
 @media (min-width:821px){.nav-panel{display:none!important}}
 
 /* ---------- buttons ---------- */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  font-family:var(--ui);font-size:1rem;font-weight:500;letter-spacing:.01em;
+  font-family:var(--ui);font-size:1.0625rem;font-weight:500;letter-spacing:.01em;
   padding:13px 26px;border-radius:980px;border:1px solid transparent;cursor:pointer;
   transition:background-color .22s ease,color .22s ease,border-color .22s ease,transform 100ms ease-out;
 }
@@ -232,7 +246,7 @@ p{margin:0}
 @media (min-width:760px){.hero h1 .nb{display:inline}}
 .hero-sub{
   margin:26px auto 0;max-width:46ch;color:var(--muted);
-  font-size:clamp(1rem,2vw,1.3125rem);font-weight:400;line-height:1.95;
+  font-size:clamp(1.1875rem,2vw,1.375rem);font-weight:400;line-height:1.9;
 }
 .hero-cta{margin-top:38px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
 @media (prefers-reduced-motion:no-preference){
@@ -245,7 +259,7 @@ p{margin:0}
 .marks{
   list-style:none;margin:30px 0 0;padding:20px 0 0;border-top:1px solid var(--line-soft);
   display:flex;flex-wrap:wrap;gap:10px 34px;
-  font-family:var(--ui);font-size:0.78125rem;color:var(--faint);letter-spacing:.06em;
+  font-family:var(--ui);font-size:var(--t-micro);color:var(--faint);letter-spacing:.06em;
 }
 
 /* ---------- pillars ---------- */
@@ -256,9 +270,9 @@ p{margin:0}
 }
 .pillar-mark{display:flex;flex-direction:column;gap:10px}
 .pillar .glyph{font-family:var(--serif);font-size:3.25rem;line-height:1;color:var(--ink);font-weight:400}
-.pillar .term{font-family:var(--ui);font-size:0.78125rem;letter-spacing:.1em;color:var(--faint);text-transform:uppercase}
-.pillar h3{font-size:1.25rem}
-.pillar p{margin-top:12px;max-width:62ch;color:var(--muted);font-size:0.96875rem;line-height:1.9;font-weight:400}
+.pillar .term{font-family:var(--ui);font-size:var(--t-micro);letter-spacing:.1em;color:var(--faint);text-transform:uppercase}
+.pillar h3{font-size:1.375rem}
+.pillar p{margin-top:14px;max-width:62ch;color:var(--muted);font-size:var(--t-body);line-height:1.85;font-weight:400}
 @media (max-width:700px){
   .pillar{grid-template-columns:1fr;gap:18px;padding-bottom:34px}
   .pillar-mark{flex-direction:row;align-items:baseline;gap:16px}
@@ -277,17 +291,17 @@ p{margin:0}
 }
 .about-id-text{margin-top:18px}
 .about-name{font-family:var(--serif);font-size:clamp(1.5rem,2.4vw,1.875rem);font-weight:700;letter-spacing:.04em}
-.about-role{font-family:var(--ui);margin-top:10px;font-size:0.78125rem;letter-spacing:.14em;color:var(--faint)}
-.about-lede{margin-top:22px;max-width:62ch;color:var(--muted);font-size:1.0625rem;line-height:1.95}
+.about-role{font-family:var(--ui);margin-top:10px;font-size:var(--t-micro);letter-spacing:.14em;color:var(--faint)}
+.about-lede{margin-top:22px;max-width:62ch;color:var(--muted);font-size:var(--t-lede);line-height:1.9}
 /* 三段是真實的時序，所以它們是一個有序清單；標籤用實際的內容，不用 01／02／03 */
 .arc{list-style:none;margin:clamp(34px,4vw,48px) 0 0;padding:0;display:grid}
 .arc li{border-top:1px solid var(--line);padding:24px 0 26px}
 .arc li:last-child{border-bottom:1px solid var(--line)}
-.arc-label{font-size:1.0625rem;font-weight:600;color:var(--ink)}
-.arc p + p{margin-top:12px;max-width:62ch;color:var(--muted);font-size:0.96875rem;line-height:1.95}
+.arc-label{font-size:1.1875rem;font-weight:600;color:var(--ink)}
+.arc p + p{margin-top:14px;max-width:62ch;color:var(--muted);font-size:var(--t-body);line-height:1.85}
 .about-close{
   margin-top:clamp(30px,4vw,42px);max-width:44ch;
-  font-size:1.0625rem;line-height:1.95;color:var(--ink);
+  font-size:var(--t-lede);line-height:1.9;color:var(--ink);
 }
 @media (max-width:760px){
   .about{grid-template-columns:1fr;gap:22px}
@@ -307,10 +321,10 @@ p{margin:0}
 .tier--flagship{border-color:var(--ink)}
 .badge{
   font-family:var(--ui);align-self:flex-start;background:var(--moss);color:var(--moss-ink);
-  font-size:0.75rem;letter-spacing:.06em;padding:6px 13px;border-radius:980px;margin-bottom:18px;
+  font-size:0.8125rem;letter-spacing:.06em;padding:6px 13px;border-radius:980px;margin-bottom:18px;
 }
-.tier-step{font-family:var(--ui);font-size:0.78125rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
-.tier h3{font-size:1.25rem;line-height:1.45;letter-spacing:-.01em}
+.tier-step{font-family:var(--ui);font-size:var(--t-micro);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+.tier h3{font-size:1.375rem;line-height:1.45;letter-spacing:-.01em}
 .badge--slot{visibility:hidden}
 @media (max-width:860px){.badge--slot{display:none}}
 @media (min-width:861px){.tier h3{min-height:4.2em}}
@@ -318,13 +332,16 @@ p{margin:0}
   margin-top:22px;font-size:clamp(1.875rem,3.4vw,2.375rem);font-weight:700;letter-spacing:-.01em;
   font-variant-numeric:tabular-nums;
 }
-.tier .price small{font-family:var(--ui);font-size:0.96875rem;font-weight:400;letter-spacing:.02em;margin-right:5px;color:var(--muted)}
+.tier .price small{font-family:var(--ui);font-size:1.0625rem;font-weight:400;letter-spacing:.02em;margin-right:5px;color:var(--muted)}
 .tier ul{list-style:none;margin:26px 0 0;padding:0;display:grid;gap:13px;align-content:start;flex:1;border-top:1px solid var(--line-soft);padding-top:24px}
-.tier li{display:grid;grid-template-columns:14px 1fr;gap:12px;font-size:0.96875rem;line-height:1.85;color:var(--muted);font-weight:400}
+/* 卡片裡的條列是窄欄。內文用的流體字級在寬螢幕升到 18px，在這個寬度會把
+   「嚴苛審核制，每季限定 1-2 位」這種本來一行讀完的句子擠出一個孤字，
+   所以條列固定 17px——比內文小半階，正好是清單該有的位置。 */
+.tier li{display:grid;grid-template-columns:14px 1fr;gap:12px;font-size:1.0625rem;line-height:1.8;color:var(--muted);font-weight:400}
 .tier li::before{content:"";height:1px;margin-top:14px;background:var(--line)}
 .tier .tier-foot{margin-top:28px;padding-top:0}
 .tier .tier-foot .btn{width:100%}
-.tier .cadence{font-family:var(--ui);margin-top:14px;font-size:0.875rem;color:var(--muted);text-align:center;line-height:1.6}
+.tier .cadence{font-family:var(--ui);margin-top:14px;font-size:var(--t-small);color:var(--muted);text-align:center;line-height:1.6}
 /* 三個價格是這一頁的核心比較。原本在窄螢幕用分段控制器一次只顯示一張，
    等於在主要裝置上藏起決策所需的資訊——改為全部並列，垂直捲動即可讀完。 */
 @media (max-width:860px){
@@ -353,8 +370,8 @@ p{margin:0}
 .cover--daily .ttl{font-size:14px;line-height:1.5}
 .cover .ttl em{display:block;font-style:normal;font-size:11px;opacity:.7;margin-top:8px;letter-spacing:.05em}
 .cover .sig{font-size:9px;letter-spacing:.16em;opacity:.66}
-.asset h3{font-size:1.25rem;line-height:1.45}
-.asset p{margin-top:14px;color:var(--muted);font-size:0.96875rem;line-height:1.9;font-weight:400}
+.asset h3{font-size:1.375rem;line-height:1.45}
+.asset p{margin-top:14px;color:var(--muted);font-size:var(--t-body);line-height:1.85;font-weight:400}
 .asset .meta{font-family:var(--ui);margin-top:16px}
 /* 外連文字連結的共通語彙：文字加尖角。顏色只花在可互動之處，
    所以購買、分享、聯絡三者共用同一套，只有尺寸各自不同。 */
@@ -370,12 +387,12 @@ p{margin:0}
 @media (prefers-reduced-motion:reduce){
   .buy::after,.share::after,.contact::after{transition:none}
 }
-.buy{margin-top:18px;font-size:0.9375rem}
+.buy{margin-top:18px;font-size:1.0625rem}
 .buy::after{font-size:1.15rem}
 .contacts{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
-.contact{font-size:0.96875rem}
+.contact{font-size:1.0625rem}
 .contact::after{font-size:1.15rem}
-.meta{font-size:0.8125rem;letter-spacing:.06em;color:var(--faint)}
+.meta{font-size:var(--t-small);letter-spacing:.05em;color:var(--faint)}
 /* 三欄並列時，購買連結在每張卡上都落在同一個位置 */
 @media (min-width:901px){
   .asset{grid-template-rows:auto 1fr;align-items:stretch}
@@ -387,22 +404,27 @@ p{margin:0}
   .assets{grid-template-columns:1fr;gap:44px}
   .asset{grid-template-columns:150px 1fr;gap:28px}
 }
-@media (max-width:460px){.asset{grid-template-columns:118px 1fr;gap:20px}}
+/* 手機上把書封壓進 118px 的欄，剩下的文字欄一行只容得下十二個字。
+   書封改回自己一列，說明文字拿回整個欄寬。 */
+@media (max-width:520px){
+  .asset{grid-template-columns:1fr;gap:18px}
+  .asset .cover-link{width:128px}
+}
 
 /* ---------- form ---------- */
 .apply-grid{margin-top:clamp(40px,6vw,60px);display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(28px,5vw,56px);align-items:start}
-.apply-aside p{color:var(--muted);font-size:0.96875rem;line-height:1.95;font-weight:400}
+.apply-aside p{color:var(--muted);font-size:var(--t-body);line-height:1.9;font-weight:400}
 .apply-aside dl{margin:26px 0 0;display:grid;gap:18px}
-.apply-aside dt{font-family:var(--ui);font-size:0.78125rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
-.apply-aside dd{margin:6px 0 0;font-size:0.96875rem;color:var(--ink);font-weight:400}
+.apply-aside dt{font-family:var(--ui);font-size:var(--t-micro);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.apply-aside dd{margin:6px 0 0;font-size:var(--t-body);color:var(--ink);font-weight:400}
 form{
   border:1px solid var(--line-soft);border-radius:var(--radius);
   padding:clamp(24px,4vw,36px);display:grid;gap:20px;
 }
 .field{display:grid;gap:8px}
-label{font-family:var(--ui);font-size:0.78125rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+label{font-family:var(--ui);font-size:var(--t-small);font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 input,select,textarea{
-  font-family:var(--ui);font-size:1rem;color:var(--ink);background:var(--surface);
+  font-family:var(--ui);font-size:1.0625rem;color:var(--ink);background:var(--surface);
   border:1px solid var(--line);border-radius:12px;padding:13px 14px;width:100%;
   transition:border-color .2s ease,box-shadow .2s ease;
 }
@@ -412,20 +434,20 @@ input:focus,select:focus,textarea:focus{outline:0;border-color:var(--accent);box
 /* :user-invalid 只在使用者動過該欄位之後才成立——載入時不會先指責對方 */
 input:user-invalid,select:user-invalid,textarea:user-invalid{border-color:var(--danger)}
 input:user-invalid:focus,select:user-invalid:focus,textarea:user-invalid:focus{box-shadow:0 0 0 4px rgba(168,65,47,.14)}
-.hint{font-family:var(--ui);font-size:0.875rem;color:var(--muted);line-height:1.7}
-.optin{display:flex;gap:11px;align-items:flex-start;font-size:0.96875rem;line-height:1.7;color:var(--muted);font-weight:400}
+.hint{font-family:var(--ui);font-size:var(--t-small);color:var(--muted);line-height:1.7}
+.optin{display:flex;gap:11px;align-items:flex-start;font-size:var(--t-body);line-height:1.75;color:var(--muted);font-weight:400}
 .optin input{width:18px;height:18px;flex:none;margin-top:3px;accent-color:var(--accent);padding:0}
 form .btn{width:100%}
 .honeypot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .form-error{
-  font-family:var(--ui);font-size:0.84375rem;line-height:1.75;color:var(--danger);
+  font-family:var(--ui);font-size:var(--t-small);line-height:1.75;color:var(--danger);
   border-left:2px solid var(--danger);padding-left:13px;
 }
 .btn:disabled{opacity:.6;cursor:progress}
 .btn:disabled:active{transform:none}
-.legal{font-family:var(--ui);font-size:0.875rem;color:var(--muted);text-align:center;line-height:1.7}
+.legal{font-family:var(--ui);font-size:var(--t-small);color:var(--muted);text-align:center;line-height:1.7}
 /* 同意的細節就放在同意發生的地方，預設收起，需要的人打得開 */
-.privacy{font-family:var(--ui);font-size:0.875rem;color:var(--muted);line-height:1.8}
+.privacy{font-family:var(--ui);font-size:var(--t-small);color:var(--muted);line-height:1.8}
 .privacy summary{
   cursor:pointer;color:var(--accent);font-weight:500;text-align:center;
   list-style:none;padding-block:6px;
@@ -464,9 +486,9 @@ form .btn{width:100%}
   background:var(--accent-wash);color:var(--accent);
   display:grid;place-items:center;font-size:1.5rem;
 }
-.modal-card h3{font-size:1.3125rem}
-.modal-card p{margin-top:12px;color:var(--muted);font-size:0.9375rem;line-height:1.9;font-weight:400}
-.modal-level{font-family:var(--ui);margin-top:18px;padding-top:16px;border-top:1px solid var(--line-soft);font-size:0.8125rem;letter-spacing:.04em;color:var(--faint)}
+.modal-card h3{font-size:1.4375rem}
+.modal-card p{margin-top:12px;color:var(--muted);font-size:var(--t-body);line-height:1.85;font-weight:400}
+.modal-level{font-family:var(--ui);margin-top:18px;padding-top:16px;border-top:1px solid var(--line-soft);font-size:var(--t-micro);letter-spacing:.04em;color:var(--faint)}
 .modal-card .btn{margin-top:26px;width:100%}
 
 /* ---------- footer ---------- */
@@ -475,15 +497,15 @@ form .btn{width:100%}
   display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 26px;
   padding-bottom:26px;margin-bottom:26px;border-bottom:1px solid var(--line-soft);
 }
-.share-label{font-family:var(--ui);font-size:0.78125rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.share-label{font-family:var(--ui);font-size:var(--t-micro);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .share-links{display:flex;flex-wrap:wrap;gap:10px 24px;align-items:baseline}
-.share{font-size:0.84375rem;letter-spacing:.02em;background:none;border:0;padding:0;cursor:pointer;gap:4px}
+.share{font-size:var(--t-small);letter-spacing:.02em;background:none;border:0;padding:0;cursor:pointer;gap:4px}
 .share::after{font-size:1.05rem}
 .share[data-done]::after{content:"✓";transform:none}
 .foot-inner{display:flex;flex-wrap:wrap;gap:18px 34px;justify-content:space-between;align-items:center}
-.foot p{font-family:var(--ui);font-size:0.8125rem;color:var(--faint);line-height:1.9}
+.foot p{font-family:var(--ui);font-size:0.875rem;color:var(--faint);line-height:1.9}
 .foot nav{display:flex;flex-wrap:wrap;gap:4px 22px}
-.foot nav a{font-family:var(--ui);font-size:0.78125rem;color:var(--muted)}
+.foot nav a{font-family:var(--ui);font-size:0.875rem;color:var(--muted)}
 /* 手指的精準度不如指標裝置，頁尾的連結與分享鈕在觸控時要有可按的高度 */
 @media (hover:none){
   .foot nav a,.share{padding-block:12px}
@@ -678,7 +700,7 @@ form .btn{width:100%}
   <section class="section" id="assets">
     <div class="shell">
       <p class="eyebrow">數位資產</p>
-      <h2 class="section-title">長尾生態：讓文字先於你抵達。</h2>
+      <h2 class="section-title"><span class="ph">長尾生態：</span><span class="ph">讓文字先於你抵達。</span></h2>
       <p class="section-lede">一人商業閉環的另一半，是能夠獨立運轉的知識產品線。以下是目前已上線與研發中的三條主線。</p>
       <div class="assets">
         <article class="asset">
@@ -706,7 +728,7 @@ form .btn{width:100%}
             </span>
           </a>
           <div class="asset-body">
-            <h3>《我們不要就這樣算了，但也不要一直記得》</h3>
+            <h3><span class="ph">《我們不要就這樣算了，</span><span class="ph">但也不要一直記得》</span></h3>
             <p>幸福三部曲的第一冊，副題〈為道日損〉——語出《道德經》「為學日益，為道日損」。簡家旗著。</p>
             <p class="meta">繁體中文電子書 · Kobo</p>
             <a class="buy" href="https://www.kobo.com/hk/zh/ebook/qdamXwfCTjWLK_PnrEUfew" target="_blank" rel="noopener noreferrer">在 Kobo 購買</a>
@@ -732,7 +754,7 @@ form .btn{width:100%}
 
   <section class="section section--alt" id="apply">
     <div class="shell">
-      <h2 class="section-title">先確認彼此合適，再談合作。</h2>
+      <h2 class="section-title"><span class="ph">先確認彼此合適，</span><span class="ph">再談合作。</span></h2>
       <div class="apply-grid">
         <div class="apply-aside">
           <p>所有層級皆採審核制。我們寧可少收，也不願讓一個錯配的席次消耗雙方的能量。請據實填寫，這份表單本身就是診斷的一部分。</p>
