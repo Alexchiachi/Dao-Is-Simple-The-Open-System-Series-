@@ -10,7 +10,10 @@ The Open System Series / Negentropy Project
 
 | 檔案 | 內容 |
 | --- | --- |
-| `index.html` | 完整網站。CSS 與 JavaScript 全部內嵌，唯一的外部請求是 Google Fonts |
+| `index.html` | 完整網站。CSS 與 JavaScript 全部內嵌，**沒有任何外部請求** |
+| `fonts/` | 中文字型子集（Noto Serif TC 400／600／700、Noto Sans TC 400／500，共 310KB）與 `fonts.css`、授權 `OFL.txt`。由 `tools/subset_fonts.py` 產生，**不要手改** |
+| `tools/subset_fonts.py` | 重新產生字型子集。改了頁面文案之後要跑 |
+| `robots.txt`、`sitemap.xml` | 開放收錄，單一網址 |
 | `images/` | 肖像、書封、網站圖示、分享預覽卡 |
 | `favicon.ico` | 16／32／48px 三種尺寸合一 |
 | `docs/design-philosophy.md` | 靜構 / Still Scaffold — 這一頁視覺語言所依據的設計哲學 |
@@ -114,7 +117,7 @@ The Open System Series / Negentropy Project
 
 HTML5 + 手寫 CSS + 原生 JavaScript。沒有 Tailwind、沒有框架、沒有建置步驟。
 
-JavaScript 只做四件事：手機選單開合、方案分段控制器、導航材質與當前章節、表單送出後的確認視窗。所有連結都是真實錨點，JavaScript 未執行時頁面仍可完整使用。
+JavaScript 只做五件事：手機選單開合、導航材質與當前章節、分享（LINE／Facebook／系統面板／複製連結）、表單送出、送出後的確認視窗。所有連結都是真實錨點，JavaScript 未執行時頁面仍可完整使用（字型也有 `<noscript>` 的備援）。
 
 互動細節依循 Apple 的流體介面原則：按壓回饋在 100ms 內發生，確認視窗沿進場的路徑退場，表單以 `:user-invalid` 在使用者離開欄位後才提示。
 
@@ -128,6 +131,40 @@ JavaScript 只做四件事：手機選單開合、方案分段控制器、導航
 `og:image` 與 `og:url` 必須是絕對網址，**改用自訂網域時這兩行要一起改**，
 否則預覽會指向舊網址。
 
+## 效能：中文字型與第一屏
+
+做法沿用雲南好物選購頁（`Alexchiachi/happy` 的 `shop/`）那一套標準，見該倉庫的 `NEW-PAGE.md`。
+
+**字型。** 原本從 Google Fonts 載入五個字重：光是字型的 CSS 就有 614KB，瀏覽器再依頁面上出現的字
+下載對應分段——這一頁會抓 **110 個檔、7.9MB**。改成自己放子集之後是 **7 個檔、310KB**，
+而且等整頁載完（`load`）才開始下載：先用系統明體畫出來，字型到了再換上。
+`tools/subset_fonts.py` 會打開頁面、逐個文字節點讀出實際用到的字族與字重，
+連 CSS `content` 的尖角與勾、JavaScript 寫進頁面的提示文字都算進去。
+**改了文案要重跑**；忘了跑也不會壞，子集裡沒有的字會用系統明體補上。
+
+**第一屏。** 開場的進場動畫原本從 `opacity:0` 開始。瀏覽器要等它真的看得見才算數「最大內容繪製」，
+所以 LCP 被自己的動畫拖到 3.3 秒。改成只位移、不淡入之後是 1.5 秒——文字第一次繪製就在畫面上，
+動的是位置，不是存在。
+
+本機實測（`npx lighthouse`，手機模式，未壓縮的本機伺服器）：
+
+| | 效能 | 無障礙 | 最佳做法 | SEO | LCP | CLS |
+| --- | --- | --- | --- | --- | --- | --- |
+| 改之前 | — | — | — | — | — | — |
+| 改之後 | 90–95 | 100 | 100 | 100 | 1.5s | 0.002 |
+
+改之前的分數量不到：本機的瀏覽器連不到 Google Fonts，字型請求瞬間失敗，
+7.9MB 的成本完全不會被計入——這正是 `NEW-PAGE.md` 記下的陷阱。所以上面用的是
+實際會下載的位元組數，那是直接向 Google Fonts 查出來的。
+**上線後請用 [PageSpeed Insights](https://pagespeed.web.dev/) 測正式網址**，
+隔幾分鐘、測 2–3 次取中間值。
+
+量過但沒有採用：把兩張照片轉成 AVIF。同樣畫質下只比現有的 WebP 小 1–2KB
+（13.8KB vs 15.1KB、17.2KB vs 18.0KB），不值得為此多一種格式與一行 `<source>`。
+
 ## 部署
 
 GitHub Pages，來源為 `main` 分支根目錄。推送到 `main` 即自動重新部署，無需工作流程檔。
+
+GitHub Pages 的快取固定十分鐘、也不能自訂標頭，PageSpeed 的「使用有效的快取生命週期」
+一定會扣分，這一項在這個主機上改不了。

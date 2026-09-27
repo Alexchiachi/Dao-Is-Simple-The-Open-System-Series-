@@ -1,0 +1,5 @@
+# 這一頁要被搜尋得到，全部開放。
+User-agent: *
+Allow: /
+
+Sitemap: https://alexchiachi.github.io/Dao-Is-Simple-The-Open-System-Series-/sitemap.xml

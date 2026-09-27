@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 單頁網站，只有一個網址。換自訂網域時這裡與 index.html 的 canonical、og:url 要一起改。 -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://alexchiachi.github.io/Dao-Is-Simple-The-Open-System-Series-/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+</urlset>

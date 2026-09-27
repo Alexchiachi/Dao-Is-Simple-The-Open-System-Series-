@@ -29,9 +29,13 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="大道至簡：生命場域與一人商業閉環">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@400;500&display=swap">
+<!-- 中文字型用自己放的子集（fonts/，由 tools/subset_fonts.py 產生），只含這一頁用到的字，
+     五個字重共約 310KB。原本從 Google Fonts 載入：光字型的 CSS 就有 614KB，
+     瀏覽器再依頁面上的字抓 110 個分段檔、約 7.9MB，手機網路會被塞滿。
+     等整頁載完（load）才開始下載：先用系統明體畫出來，字型到了再換上。
+     做法與雲南好物 shop/ 相同（見 NEW-PAGE.md）。 -->
+<script>addEventListener('load', function () { var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'fonts/fonts.css'; document.head.appendChild(l); });</script>
+<noscript><link rel="stylesheet" href="fonts/fonts.css"></noscript>
 <style>
 :root{
   --ground:#FBFBFD;
@@ -148,6 +152,23 @@ a{color:var(--accent);text-decoration:none}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
 
 /* ---------- shell ---------- */
+/* 鍵盤使用者的第一站：平時收在畫面外，聚焦才滑下來。
+   <main> 預設不可聚焦，沒有 tabindex="-1" 焦點不會真的移過去；
+   移過去之後要關掉它自己的外框，否則整塊主內容會被框起來。 */
+/* 只給報讀與語音操作看的字。不能用 display:none——那樣報讀也讀不到。 */
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
+}
+.skip-link{
+  position:fixed;top:0;left:22px;z-index:200;transform:translateY(-140%);
+  background:var(--surface);color:var(--ink);border:1px solid var(--accent);
+  font-family:var(--ui);font-size:var(--t-small);padding:12px 20px;border-radius:0 0 8px 8px;
+  transition:transform .18s ease-out;
+}
+.skip-link:focus{transform:translateY(0)}
+main:focus{outline:none}
+@media (prefers-reduced-motion:reduce){.skip-link{transition:none}}
 .shell{width:100%;max-width:var(--shell);margin-inline:auto;padding-inline:22px}
 .section{padding-block:clamp(88px,12vw,156px)}
 .section--alt{background:var(--alt)}
@@ -155,7 +176,8 @@ a{color:var(--accent);text-decoration:none}
 
 /* ---------- type ---------- */
 h1,h2,h3,h4{margin:0;text-wrap:balance;letter-spacing:0;font-weight:600;line-height:1.35}
-p{margin:0}
+/* 標題求每行等長（balance），段落只求最後一行不要單獨剩一個字（pretty） */
+p{margin:0;text-wrap:pretty}
 .eyebrow{
   font-family:var(--ui);
   font-size:var(--t-micro);font-weight:500;letter-spacing:.16em;text-transform:uppercase;
@@ -198,7 +220,9 @@ p{margin:0}
 .nav-links{display:flex;gap:30px;align-items:center}
 .nav-links a{font-family:var(--ui);font-size:0.875rem;color:var(--ink);opacity:.82;transition:opacity .15s ease}
 .nav-links a:active{opacity:.5}
-.nav-links a:hover{opacity:1}
+/* hover 一律包在游標裝置裡：觸控螢幕上 :hover 會在點完之後黏住不放。
+   按下的回饋由 :active 負責，兩者分開。 */
+@media (hover:hover) and (pointer:fine){.nav-links a:hover{opacity:1}}
 .nav-links a[aria-current]{opacity:1;color:var(--ink)}
 .nav-links a[aria-current]::after{
   content:"";display:block;height:1px;margin-top:5px;background:var(--ink);
@@ -227,9 +251,11 @@ p{margin:0}
   transition:background-color .22s ease,color .22s ease,border-color .22s ease,transform 100ms ease-out;
 }
 .btn--fill{background:var(--accent);color:var(--on-accent)}
-.btn--fill:hover{background:var(--accent-press)}
 .btn--ghost{background:transparent;color:var(--accent);border-color:var(--accent)}
-.btn--ghost:hover{background:var(--accent-wash)}
+@media (hover:hover) and (pointer:fine){
+  .btn--fill:hover{background:var(--accent-press)}
+  .btn--ghost:hover{background:var(--accent-wash)}
+}
 .btn:active{transform:scale(.97)}
 @media (prefers-reduced-motion:reduce){
   .btn{transition:none}
@@ -253,7 +279,10 @@ p{margin:0}
   .rise{animation:rise .8s cubic-bezier(.22,.68,.32,1) both}
   .rise-2{animation-delay:.09s}
   .rise-3{animation-delay:.18s}
-  @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  /* 進場只位移，不淡入。開場這三個元素就是第一屏最大的內容，從 opacity:0 開始的話，
+     瀏覽器要等動畫跑完、它真的看得見，才算數「最大內容繪製」——同一頁實測 3.3 秒。
+     改成只位移之後，文字第一次繪製就在畫面上，動的是位置不是存在。 */
+  @keyframes rise{from{transform:translateY(16px)}to{transform:none}}
 }
 
 .marks{
@@ -382,7 +411,9 @@ p{margin:0}
 .buy::after,.share::after,.contact::after{
   content:"\203A";line-height:1;transform:translateY(-1px);transition:transform .2s ease;
 }
-.buy:hover::after,.share:hover::after,.contact:hover::after{transform:translate(3px,-1px)}
+@media (hover:hover) and (pointer:fine){
+  .buy:hover::after,.share:hover::after,.contact:hover::after{transform:translate(3px,-1px)}
+}
 .buy:active,.share:active,.contact:active{opacity:.6}
 @media (prefers-reduced-motion:reduce){
   .buy::after,.share::after,.contact::after{transition:none}
@@ -515,6 +546,7 @@ form .btn{width:100%}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#top">跳到主要內容</a>
 
 <div class="top-sentinel" aria-hidden="true"></div>
 
@@ -547,7 +579,7 @@ form .btn{width:100%}
   </div>
 </header>
 
-<main id="top">
+<main id="top" tabindex="-1">
 
   <section class="hero">
     <div class="shell">
@@ -720,12 +752,15 @@ form .btn{width:100%}
           </div>
         </article>
         <article class="asset">
-          <a class="cover-link" href="https://www.kobo.com/hk/zh/ebook/qdamXwfCTjWLK_PnrEUfew" target="_blank" rel="noopener noreferrer" aria-label="在 Kobo 購買《我們不要就這樣算了，但也不要一直記得》">
-            <span class="cover cover--daily" aria-hidden="true">
+          <!-- 書封上印的字在畫面上看得見，所以它就是這個連結的名稱；用途另外補一句只給報讀的字。
+               名稱與畫面上的字不一致時，用語音說「我們不要就這樣算了」會點不到（WCAG 2.5.3）。 -->
+          <a class="cover-link" href="https://www.kobo.com/hk/zh/ebook/qdamXwfCTjWLK_PnrEUfew" target="_blank" rel="noopener noreferrer">
+            <span class="cover cover--daily">
               <span class="kicker">幸福三部曲 · 第 1 冊</span>
               <span class="ttl">我們不要就這樣算了，但也不要一直記得<em>為道日損 · 簡家旗</em></span>
               <span class="sig">KOBO</span>
             </span>
+            <span class="sr-only">在 Kobo 購買</span>
           </a>
           <div class="asset-body">
             <h3><span class="ph">《我們不要就這樣算了，</span><span class="ph">但也不要一直記得》</span></h3>
