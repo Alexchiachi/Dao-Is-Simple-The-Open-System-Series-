@@ -201,7 +201,7 @@ function sendTestApplication() {
   const result = doPost({
     postData: {
       contents: JSON.stringify({
-        level: '第一階・90 分鐘生命場域深度對話（NT$ 26,400）',
+        level: '第一階・90 分鐘生命場域深度對話（NT$ 50,000）',
         name: '測試申請',
         email: NOTIFY_EMAIL || 'test@example.com',
         tier: '創辦人 / 負責人・年收 300–1,000 萬',

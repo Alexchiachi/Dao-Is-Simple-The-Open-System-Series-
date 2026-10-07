@@ -16,16 +16,17 @@ This is an ultra-high-ticket, highly selective private advisory service. All cop
 
 Target Audience: C-suite executives, senior founders, high-net-worth creators facing energy dissipation and career bottlenecks (38–55 years old in Taiwan).
 
-# Precise 3X Pricing Matrix to Render:
+# Precise Pricing Matrix to Render:
+> 定價已於 2026-10-07 調整為下列現價。三階原始單價與 3 倍推導過程保留在上方 commit 歷史中。
 1. Tier 1: 【系統破局・90分鐘生命場域深度對話】
-   - Price: NT$ 26,400 (原 NT$ 8,800 × 3)
+   - Price: NT$ 50,000
    - Scope: 1-on-1 耗散結構熵增診斷、認知架構重塑、會後核心策略錄音與個人系統路徑圖。
 2. Tier 2: 【中寮山林・3天2夜感官定錨小班工坊】
-   - Price: NT$ 144,000 (原 NT$ 48,000 × 3)
+   - Price: NT$ 150,000
    - Scope: 私密席次（每班僅限 2 人）。構樹樹皮敲擊工藝、天然黑麥酸種手作、一對一哲學解構、食宿場域全包。
 3. Tier 3 (Flagship): 【一人商業閉環・3 個月全週期親自陪跑】
-   - Price: NT$ 504,000 (原 NT$ 168,000 × 3)
-   - Scope: 嚴苛審核制（每季限定 1–2 位）。含山林體驗 + 國際化數位產品線搭設 (Amazon KDP/Gumroad) + AI 自動化一人流水線完整部署 + 隔週深度覆盤。
+   - Price: NT$ 500,000
+   - Scope: 嚴苛審核制（每季限定 1–2 位）。含山林體驗 + 國際化數位產品線搭設(Amazon KDP/Gumroad) + AI 自動化一人流水線完整部署 + 隔週深度覆盤。
 
 # Visual Aesthetics & Styling Specifications
 - Framework: Tailwind CSS (via CDN: `<script src="https://cdn.tailwindcss.com"></script>`).
@@ -47,7 +48,7 @@ Target Audience: C-suite executives, senior founders, high-net-worth creators fa
 2. `Hero Section`:
    - Headline: 「告別無效增熵，以大道至簡，一人活成一支軍隊。」
    - Sub-headline: 不是退而求其次的微型創業，而是一場融合東方哲思、耗散結構物理學與數位槓桿的「系統性自我實現」。
-   - CTAs: [預約審核諮詢 (NT$ 26,400)] & [下載 8 頁高階主管單兵轉型策略指南 (免費)].
+   - CTAs: [預約審核諮詢 (NT$ 50,000)] & [下載 8 頁高階主管單兵轉型策略指南 (免費)].
 3. `Core Philosophy (耗散結構與生命場域)`:
    - 3 Pillars:
      1. 物理負熵：打破封閉系統的內耗，建立能量自足的開放秩序。
